@@ -1,0 +1,57 @@
+name: Deploy prototype to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Rebuild Open Design export
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cat source/index.html.gz.b64.part.* \
+            | base64 --decode \
+            | gzip --decompress \
+            > _site/index.html
+
+          echo "62b6efd29adb48d8cd6c73920d4258d3561629ac8ad74c6b4b0a6c13fa3b9438  _site/index.html" \
+            | sha256sum --check -
+
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
