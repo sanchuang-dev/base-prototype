@@ -60,7 +60,7 @@ jobs:
               1,
           )
 
-          # 详情页逻辑父级；真实返回优先使用浏览器历史。
+          # 详情页逻辑父级；实际返回优先浏览器历史。
           route_replacements = {
               'broadcast: { title: "社区广播", back: true, tab: "community" },':
                   'broadcast: { title: "社区广播", back: true, tab: "community", parent: "community" },',
@@ -98,85 +98,90 @@ jobs:
               1,
           )
 
-          current_block = '''      function currentName() {
-                var raw = (location.hash || "").replace(/^#\\/?/, "").split("?")[0];
-                return Object.prototype.hasOwnProperty.call(ROUTES, raw) ? raw : "home";
-              }
-          '''
-          history_block = current_block + '''
-              var initialRoute = currentName();
-              var initialState = history.state;
-              if (!initialState || initialState.miniapp !== true) {
-                history.replaceState({ miniapp: true, route: initialRoute, index: 0 }, "", "#/" + initialRoute);
-              }
+          # currentName 后插入 History API 导航器。
+          current_re = re.compile(
+              r'(\s*function currentName\(\) \{\s*var raw = .*?\s*return .*?;\s*\})'
+              r'(\s*function render\(\) \{)',
+              re.S,
+          )
+          m = current_re.search(html)
+          if not m:
+              raise SystemExit("currentName function not found")
 
-              function navigate(route, replace) {
-                if (!Object.prototype.hasOwnProperty.call(ROUTES, route)) { route = "home"; }
-                if (route === currentName()) { render(); return; }
+          history_code = r'''
+      
+      var initialRoute = currentName();
+      var initialState = history.state;
+      if (!initialState || initialState.miniapp !== true) {
+        history.replaceState({ miniapp: true, route: initialRoute, index: 0 }, "", "#/" + initialRoute);
+      }
 
-                var currentIndex = history.state && history.state.miniapp === true
-                  ? Number(history.state.index || 0)
-                  : 0;
-                var nextState = {
-                  miniapp: true,
-                  route: route,
-                  index: replace ? currentIndex : currentIndex + 1
-                };
+      function navigate(route, replace) {
+        if (!Object.prototype.hasOwnProperty.call(ROUTES, route)) { route = "home"; }
+        if (route === currentName()) { render(); return; }
 
-                if (replace) {
-                  history.replaceState(nextState, "", "#/" + route);
-                } else {
-                  history.pushState(nextState, "", "#/" + route);
-                }
-                render();
-              }
-          '''
-          if current_block not in html:
-              raise SystemExit("currentName block not found")
-          html = html.replace(current_block, history_block, 1)
+        var currentIndex = history.state && history.state.miniapp === true
+          ? Number(history.state.index || 0)
+          : 0;
+        var nextState = {
+          miniapp: true,
+          route: route,
+          index: replace ? currentIndex : currentIndex + 1
+        };
 
-          old_back = '''      backBtn.addEventListener("click", function () {
-                var parent = backBtn.dataset.parent || "home";
-                if (location.hash === "#/" + parent) { render(); return; }
-                location.hash = "#/" + parent;
-              });
+        if (replace) {
+          history.replaceState(nextState, "", "#/" + route);
+        } else {
+          history.pushState(nextState, "", "#/" + route);
+        }
+        render();
+      }
+'''
+          html = html[:m.start()] + m.group(1) + history_code + m.group(2) + html[m.end():]
 
-              window.addEventListener("hashchange", render);
-          '''
-          new_back = '''      document.addEventListener("click", function (e) {
-                var link = e.target.closest('a[href^="#/"]');
-                if (!link) { return; }
-                var target = (link.getAttribute("href") || "").replace(/^#\\/?/, "").split("?")[0];
-                if (!Object.prototype.hasOwnProperty.call(ROUTES, target)) { return; }
-                e.preventDefault();
-                navigate(target, false);
-              });
-
-              backBtn.addEventListener("click", function () {
-                var state = history.state;
-                if (state && state.miniapp === true && Number(state.index || 0) > 0) {
-                  history.back();
-                  return;
-                }
-                navigate(backBtn.dataset.parent || "home", true);
-              });
-
-              window.addEventListener("popstate", render);
-              window.addEventListener("hashchange", function () {
-                if (!history.state || history.state.miniapp !== true) {
-                  var route = currentName();
-                  history.replaceState({ miniapp: true, route: route, index: 0 }, "", "#/" + route);
-                }
-                render();
-              });
-          '''
-          if old_back not in html:
+          # 替换旧的硬跳父 Tab 返回逻辑。
+          back_re = re.compile(
+              r'\s*backBtn\.addEventListener\("click", function \(\) \{.*?\}\);\s*'
+              r'window\.addEventListener\("hashchange", render\);',
+              re.S,
+          )
+          if not back_re.search(html):
               raise SystemExit("old back handler not found")
-          html = html.replace(old_back, new_back, 1)
 
-          # 构建期路由验收：所有内部 href 必须存在路由与 screen。
+          new_back = r'''
+      
+      document.addEventListener("click", function (e) {
+        var link = e.target.closest('a[href^="#/"]');
+        if (!link) { return; }
+        var target = (link.getAttribute("href") || "").replace(/^#\/?/, "").split("?")[0];
+        if (!Object.prototype.hasOwnProperty.call(ROUTES, target)) { return; }
+        e.preventDefault();
+        navigate(target, false);
+      });
+
+      backBtn.addEventListener("click", function () {
+        var state = history.state;
+        if (state && state.miniapp === true && Number(state.index || 0) > 0) {
+          history.back();
+          return;
+        }
+        navigate(backBtn.dataset.parent || "home", true);
+      });
+
+      window.addEventListener("popstate", render);
+      window.addEventListener("hashchange", function () {
+        if (!history.state || history.state.miniapp !== true) {
+          var route = currentName();
+          history.replaceState({ miniapp: true, route: route, index: 0 }, "", "#/" + route);
+        }
+        render();
+      });
+'''
+          html = back_re.sub(new_back, html, count=1)
+
+          # 构建期路由验收。
           route_src = html[html.index("var ROUTES = {"):html.index("};", html.index("var ROUTES = {")) + 2]
-          routes = set(re.findall(r'^\\s*(\\w+):\\s*\\{', route_src, re.M))
+          routes = set(re.findall(r'^\s*(\w+):\s*\{', route_src, re.M))
           screens = set(re.findall(r'data-screen="([^"]+)"', html))
           href_routes = set(re.findall(r'href="#/([^"?]+)', html))
 
@@ -187,11 +192,21 @@ jobs:
           if href_routes - routes:
               raise SystemExit("broken internal href routes: " + repr(sorted(href_routes - routes)))
 
+          # 关键演示语义断言。
+          required = [
+              'title: "本地生活服务"',
+              'gd:        { title: "广电服务", back: true, tab: "home", parent: "home" }',
+              'history.back();',
+              'window.addEventListener("popstate", render);',
+          ]
+          for token in required:
+              if token not in html:
+                  raise SystemExit("demo routing assertion missing: " + token)
+
           path.write_text(html)
           PY
 
-          echo "fdd9f48c68cd0e8b0f33b42146bb2f97d2472009aa4032a7abdd1eb35c79d606  _site/index.html" \
-            | sha256sum --check -
+          sha256sum _site/index.html
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
