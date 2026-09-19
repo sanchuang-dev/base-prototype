@@ -54,6 +54,22 @@ jobs:
           echo "aa5623463ac4d8760b4ede157b1563fdb4e9748f94aee1fa82757e7ba27c7314  _site/index.html" \
             | sha256sum --check -
 
+      - name: Apply PRD V0.3 design
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 --decode patches/v0.3.patch.gz.b64 \
+            | gzip --decompress \
+            > /tmp/v0.3.patch
+
+          (
+            cd _site
+            patch -p1 < /tmp/v0.3.patch
+          )
+
+          echo "65981351a165ea7cade72427059429d398057a6f90a7ea1feae40e4925a0bf99  _site/index.html" \
+            | sha256sum --check -
+
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
