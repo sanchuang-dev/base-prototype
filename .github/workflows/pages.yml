@@ -30,45 +30,168 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-
           cat release/v0.3.1/index.html.gz.b64.part.* \
             | base64 --decode \
             | gzip --decompress \
             > _site/index.html
-
           echo "fa171baa73d582134818884289cf7dfbfec7d4d5c48a4e47d849eeeda84a76a8  _site/index.html" \
             | sha256sum --check -
 
-      - name: Fix homepage title for V0.3.2
+      - name: Apply V0.3.3 demo routing fixes
         shell: bash
         run: |
           set -euo pipefail
-
           python - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path("_site/index.html")
           html = path.read_text()
 
-          old_route = 'home:      { title: "社区家庭健康", sub: "示例街道 · 幸福里社区", tab: "home" },'
-          new_route = 'home:      { title: "本地生活服务", sub: "示例街道 · 幸福里社区", tab: "home" },'
+          # 首页标题
+          html = html.replace(
+              'home:      { title: "社区家庭健康", sub: "示例街道 · 幸福里社区", tab: "home" },',
+              'home:      { title: "本地生活服务", sub: "示例街道 · 幸福里社区", tab: "home" },',
+              1,
+          )
+          html = html.replace(
+              'document.title = cfg.title + " · 社区家庭健康服务平台";',
+              'document.title = cfg.title + " · 幸福里社区";',
+              1,
+          )
 
-          old_title = 'document.title = cfg.title + " · 社区家庭健康服务平台";'
-          new_title = 'document.title = cfg.title + " · 幸福里社区";'
+          # 详情页逻辑父级；真实返回优先使用浏览器历史。
+          route_replacements = {
+              'broadcast: { title: "社区广播", back: true, tab: "community" },':
+                  'broadcast: { title: "社区广播", back: true, tab: "community", parent: "community" },',
+              'activity:  { title: "活动详情", back: true, tab: "community" },':
+                  'activity:  { title: "活动详情", back: true, tab: "community", parent: "community" },',
+              'culture:   { title: "党群文化中心", back: true, tab: "community" },':
+                  'culture:   { title: "党群文化中心", back: true, tab: "community", parent: "community" },',
+              'ai:        { title: "社区助手", back: true, tab: "health" },':
+                  'ai:        { title: "社区助手", back: true, tab: "health", parent: "health" },',
+              'device:    { title: "魔镜 · 健康终端", back: true, tab: "health" },':
+                  'device:    { title: "魔镜 · 健康终端", back: true, tab: "health", parent: "health" },',
+              'lecture:   { title: "健康讲堂", back: true, tab: "health" },':
+                  'lecture:   { title: "健康讲堂", back: true, tab: "health", parent: "health" },',
+              'product:   { title: "商品详情", back: true, tab: "life" },':
+                  'product:   { title: "商品详情", back: true, tab: "life", parent: "life" },',
+              'exchange:  { title: "积分兑换", back: true, tab: "life" },':
+                  'exchange:  { title: "积分兑换", back: true, tab: "life", parent: "life" },',
+              'points:    { title: "我的积分", back: true, tab: "me" },':
+                  'points:    { title: "我的积分", back: true, tab: "me", parent: "me" },',
+              'gd:        { title: "广电服务", back: true, tab: "me" },':
+                  'gd:        { title: "广电服务", back: true, tab: "home", parent: "home" },',
+              'mydevices: { title: "我的设备", back: true, tab: "me" },':
+                  'mydevices: { title: "我的设备", back: true, tab: "me", parent: "me" },',
+          }
+          for old, new in route_replacements.items():
+              if old not in html:
+                  raise SystemExit("route source not found: " + old)
+              html = html.replace(old, new, 1)
 
-          if old_route not in html:
-              raise SystemExit("homepage route title source not found")
-          if old_title not in html:
-              raise SystemExit("document title source not found")
+          if 'backBtn.dataset.parent = cfg.tab;' not in html:
+              raise SystemExit("back parent source not found")
+          html = html.replace(
+              'backBtn.dataset.parent = cfg.tab;',
+              'backBtn.dataset.parent = cfg.parent || cfg.tab || "home";',
+              1,
+          )
 
-          html = html.replace(old_route, new_route, 1)
-          html = html.replace(old_title, new_title, 1)
+          current_block = '''      function currentName() {
+                var raw = (location.hash || "").replace(/^#\\/?/, "").split("?")[0];
+                return Object.prototype.hasOwnProperty.call(ROUTES, raw) ? raw : "home";
+              }
+          '''
+          history_block = current_block + '''
+              var initialRoute = currentName();
+              var initialState = history.state;
+              if (!initialState || initialState.miniapp !== true) {
+                history.replaceState({ miniapp: true, route: initialRoute, index: 0 }, "", "#/" + initialRoute);
+              }
+
+              function navigate(route, replace) {
+                if (!Object.prototype.hasOwnProperty.call(ROUTES, route)) { route = "home"; }
+                if (route === currentName()) { render(); return; }
+
+                var currentIndex = history.state && history.state.miniapp === true
+                  ? Number(history.state.index || 0)
+                  : 0;
+                var nextState = {
+                  miniapp: true,
+                  route: route,
+                  index: replace ? currentIndex : currentIndex + 1
+                };
+
+                if (replace) {
+                  history.replaceState(nextState, "", "#/" + route);
+                } else {
+                  history.pushState(nextState, "", "#/" + route);
+                }
+                render();
+              }
+          '''
+          if current_block not in html:
+              raise SystemExit("currentName block not found")
+          html = html.replace(current_block, history_block, 1)
+
+          old_back = '''      backBtn.addEventListener("click", function () {
+                var parent = backBtn.dataset.parent || "home";
+                if (location.hash === "#/" + parent) { render(); return; }
+                location.hash = "#/" + parent;
+              });
+
+              window.addEventListener("hashchange", render);
+          '''
+          new_back = '''      document.addEventListener("click", function (e) {
+                var link = e.target.closest('a[href^="#/"]');
+                if (!link) { return; }
+                var target = (link.getAttribute("href") || "").replace(/^#\\/?/, "").split("?")[0];
+                if (!Object.prototype.hasOwnProperty.call(ROUTES, target)) { return; }
+                e.preventDefault();
+                navigate(target, false);
+              });
+
+              backBtn.addEventListener("click", function () {
+                var state = history.state;
+                if (state && state.miniapp === true && Number(state.index || 0) > 0) {
+                  history.back();
+                  return;
+                }
+                navigate(backBtn.dataset.parent || "home", true);
+              });
+
+              window.addEventListener("popstate", render);
+              window.addEventListener("hashchange", function () {
+                if (!history.state || history.state.miniapp !== true) {
+                  var route = currentName();
+                  history.replaceState({ miniapp: true, route: route, index: 0 }, "", "#/" + route);
+                }
+                render();
+              });
+          '''
+          if old_back not in html:
+              raise SystemExit("old back handler not found")
+          html = html.replace(old_back, new_back, 1)
+
+          # 构建期路由验收：所有内部 href 必须存在路由与 screen。
+          route_src = html[html.index("var ROUTES = {"):html.index("};", html.index("var ROUTES = {")) + 2]
+          routes = set(re.findall(r'^\\s*(\\w+):\\s*\\{', route_src, re.M))
+          screens = set(re.findall(r'data-screen="([^"]+)"', html))
+          href_routes = set(re.findall(r'href="#/([^"?]+)', html))
+
+          if screens - routes:
+              raise SystemExit("screens without routes: " + repr(sorted(screens - routes)))
+          if routes - screens:
+              raise SystemExit("routes without screens: " + repr(sorted(routes - screens)))
+          if href_routes - routes:
+              raise SystemExit("broken internal href routes: " + repr(sorted(href_routes - routes)))
+
           path.write_text(html)
           PY
 
-          echo "a68937451cac05d22be8e1f3ddb92b625dc9ba9318c855bd436aa5b5dad09e16  _site/index.html" \
+          echo "fdd9f48c68cd0e8b0f33b42146bb2f97d2472009aa4032a7abdd1eb35c79d606  _site/index.html" \
             | sha256sum --check -
-
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
