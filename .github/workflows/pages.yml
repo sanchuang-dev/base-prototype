@@ -43,12 +43,11 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-          import re
+          import re, base64
 
           path = Path("_site/index.html")
           html = path.read_text()
 
-          # 首页标题
           html = html.replace(
               'home:      { title: "社区家庭健康", sub: "示例街道 · 幸福里社区", tab: "home" },',
               'home:      { title: "本地生活服务", sub: "示例街道 · 幸福里社区", tab: "home" },',
@@ -60,7 +59,6 @@ jobs:
               1,
           )
 
-          # 详情页逻辑父级；实际返回优先浏览器历史。
           route_replacements = {
               'broadcast: { title: "社区广播", back: true, tab: "community" },':
                   'broadcast: { title: "社区广播", back: true, tab: "community", parent: "community" },',
@@ -98,7 +96,6 @@ jobs:
               1,
           )
 
-          # currentName 后插入 History API 导航器。
           current_re = re.compile(
               r'(\s*function currentName\(\) \{\s*var raw = .*?\s*return .*?;\s*\})'
               r'(\s*function render\(\) \{)',
@@ -108,38 +105,9 @@ jobs:
           if not m:
               raise SystemExit("currentName function not found")
 
-          history_code = r'''
-      
-      var initialRoute = currentName();
-      var initialState = history.state;
-      if (!initialState || initialState.miniapp !== true) {
-        history.replaceState({ miniapp: true, route: initialRoute, index: 0 }, "", "#/" + initialRoute);
-      }
-
-      function navigate(route, replace) {
-        if (!Object.prototype.hasOwnProperty.call(ROUTES, route)) { route = "home"; }
-        if (route === currentName()) { render(); return; }
-
-        var currentIndex = history.state && history.state.miniapp === true
-          ? Number(history.state.index || 0)
-          : 0;
-        var nextState = {
-          miniapp: true,
-          route: route,
-          index: replace ? currentIndex : currentIndex + 1
-        };
-
-        if (replace) {
-          history.replaceState(nextState, "", "#/" + route);
-        } else {
-          history.pushState(nextState, "", "#/" + route);
-        }
-        render();
-      }
-'''
+          history_code = base64.b64decode("CiAgICAgIHZhciBpbml0aWFsUm91dGUgPSBjdXJyZW50TmFtZSgpOwogICAgICB2YXIgaW5pdGlhbFN0YXRlID0gaGlzdG9yeS5zdGF0ZTsKICAgICAgaWYgKCFpbml0aWFsU3RhdGUgfHwgaW5pdGlhbFN0YXRlLm1pbmlhcHAgIT09IHRydWUpIHsKICAgICAgICBoaXN0b3J5LnJlcGxhY2VTdGF0ZSh7IG1pbmlhcHA6IHRydWUsIHJvdXRlOiBpbml0aWFsUm91dGUsIGluZGV4OiAwIH0sICIiLCAiIy8iICsgaW5pdGlhbFJvdXRlKTsKICAgICAgfQoKICAgICAgZnVuY3Rpb24gbmF2aWdhdGUocm91dGUsIHJlcGxhY2UpIHsKICAgICAgICBpZiAoIU9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChST1VURVMsIHJvdXRlKSkgeyByb3V0ZSA9ICJob21lIjsgfQogICAgICAgIGlmIChyb3V0ZSA9PT0gY3VycmVudE5hbWUoKSkgeyByZW5kZXIoKTsgcmV0dXJuOyB9CgogICAgICAgIHZhciBjdXJyZW50SW5kZXggPSBoaXN0b3J5LnN0YXRlICYmIGhpc3Rvcnkuc3RhdGUubWluaWFwcCA9PT0gdHJ1ZQogICAgICAgICAgPyBOdW1iZXIoaGlzdG9yeS5zdGF0ZS5pbmRleCB8fCAwKQogICAgICAgICAgOiAwOwogICAgICAgIHZhciBuZXh0U3RhdGUgPSB7CiAgICAgICAgICBtaW5pYXBwOiB0cnVlLAogICAgICAgICAgcm91dGU6IHJvdXRlLAogICAgICAgICAgaW5kZXg6IHJlcGxhY2UgPyBjdXJyZW50SW5kZXggOiBjdXJyZW50SW5kZXggKyAxCiAgICAgICAgfTsKCiAgICAgICAgaWYgKHJlcGxhY2UpIHsKICAgICAgICAgIGhpc3RvcnkucmVwbGFjZVN0YXRlKG5leHRTdGF0ZSwgIiIsICIjLyIgKyByb3V0ZSk7CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgIGhpc3RvcnkucHVzaFN0YXRlKG5leHRTdGF0ZSwgIiIsICIjLyIgKyByb3V0ZSk7CiAgICAgICAgfQogICAgICAgIHJlbmRlcigpOwogICAgICB9Cg==").decode()
           html = html[:m.start()] + m.group(1) + history_code + m.group(2) + html[m.end():]
 
-          # 替换旧的硬跳父 Tab 返回逻辑。
           back_re = re.compile(
               r'\s*backBtn\.addEventListener\("click", function \(\) \{.*?\}\);\s*'
               r'window\.addEventListener\("hashchange", render\);',
@@ -148,38 +116,9 @@ jobs:
           if not back_re.search(html):
               raise SystemExit("old back handler not found")
 
-          new_back = r'''
-      
-      document.addEventListener("click", function (e) {
-        var link = e.target.closest('a[href^="#/"]');
-        if (!link) { return; }
-        var target = (link.getAttribute("href") || "").replace(/^#\/?/, "").split("?")[0];
-        if (!Object.prototype.hasOwnProperty.call(ROUTES, target)) { return; }
-        e.preventDefault();
-        navigate(target, false);
-      });
-
-      backBtn.addEventListener("click", function () {
-        var state = history.state;
-        if (state && state.miniapp === true && Number(state.index || 0) > 0) {
-          history.back();
-          return;
-        }
-        navigate(backBtn.dataset.parent || "home", true);
-      });
-
-      window.addEventListener("popstate", render);
-      window.addEventListener("hashchange", function () {
-        if (!history.state || history.state.miniapp !== true) {
-          var route = currentName();
-          history.replaceState({ miniapp: true, route: route, index: 0 }, "", "#/" + route);
-        }
-        render();
-      });
-'''
+          new_back = base64.b64decode("CiAgICAgIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgZnVuY3Rpb24gKGUpIHsKICAgICAgICB2YXIgbGluayA9IGUudGFyZ2V0LmNsb3Nlc3QoJ2FbaHJlZl49IiMvIl0nKTsKICAgICAgICBpZiAoIWxpbmspIHsgcmV0dXJuOyB9CiAgICAgICAgdmFyIHRhcmdldCA9IChsaW5rLmdldEF0dHJpYnV0ZSgiaHJlZiIpIHx8ICIiKS5yZXBsYWNlKC9eI1wvPy8sICIiKS5zcGxpdCgiPyIpWzBdOwogICAgICAgIGlmICghT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsKFJPVVRFUywgdGFyZ2V0KSkgeyByZXR1cm47IH0KICAgICAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgbmF2aWdhdGUodGFyZ2V0LCBmYWxzZSk7CiAgICAgIH0pOwoKICAgICAgYmFja0J0bi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uICgpIHsKICAgICAgICB2YXIgc3RhdGUgPSBoaXN0b3J5LnN0YXRlOwogICAgICAgIGlmIChzdGF0ZSAmJiBzdGF0ZS5taW5pYXBwID09PSB0cnVlICYmIE51bWJlcihzdGF0ZS5pbmRleCB8fCAwKSA+IDApIHsKICAgICAgICAgIGhpc3RvcnkuYmFjaygpOwogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICBuYXZpZ2F0ZShiYWNrQnRuLmRhdGFzZXQucGFyZW50IHx8ICJob21lIiwgdHJ1ZSk7CiAgICAgIH0pOwoKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoInBvcHN0YXRlIiwgcmVuZGVyKTsKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImhhc2hjaGFuZ2UiLCBmdW5jdGlvbiAoKSB7CiAgICAgICAgaWYgKCFoaXN0b3J5LnN0YXRlIHx8IGhpc3Rvcnkuc3RhdGUubWluaWFwcCAhPT0gdHJ1ZSkgewogICAgICAgICAgdmFyIHJvdXRlID0gY3VycmVudE5hbWUoKTsKICAgICAgICAgIGhpc3RvcnkucmVwbGFjZVN0YXRlKHsgbWluaWFwcDogdHJ1ZSwgcm91dGU6IHJvdXRlLCBpbmRleDogMCB9LCAiIiwgIiMvIiArIHJvdXRlKTsKICAgICAgICB9CiAgICAgICAgcmVuZGVyKCk7CiAgICAgIH0pOwo=").decode()
           html = back_re.sub(new_back, html, count=1)
 
-          # 构建期路由验收。
           route_src = html[html.index("var ROUTES = {"):html.index("};", html.index("var ROUTES = {")) + 2]
           routes = set(re.findall(r'^\s*(\w+):\s*\{', route_src, re.M))
           screens = set(re.findall(r'data-screen="([^"]+)"', html))
@@ -192,7 +131,6 @@ jobs:
           if href_routes - routes:
               raise SystemExit("broken internal href routes: " + repr(sorted(href_routes - routes)))
 
-          # 关键演示语义断言。
           required = [
               'title: "本地生活服务"',
               'gd:        { title: "广电服务", back: true, tab: "home", parent: "home" }',
