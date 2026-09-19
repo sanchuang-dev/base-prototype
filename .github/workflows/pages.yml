@@ -25,47 +25,16 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Rebuild Open Design export
+      - name: Rebuild V0.3 release
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p _site
-          cat source/index.html.gz.b64.part.* \
+
+          cat release/v0.3/index.html.gz.b64.part.* \
             | base64 --decode \
             | gzip --decompress \
             > _site/index.html
-
-          echo "62b6efd29adb48d8cd6c73920d4258d3561629ac8ad74c6b4b0a6c13fa3b9438  _site/index.html" \
-            | sha256sum --check -
-
-      - name: Apply PRD V0.2 design
-        shell: bash
-        run: |
-          set -euo pipefail
-          base64 --decode patches/v0.2.patch.gz.b64 \
-            | gzip --decompress \
-            > /tmp/v0.2.patch
-
-          (
-            cd _site
-            patch -p1 < /tmp/v0.2.patch
-          )
-
-          echo "aa5623463ac4d8760b4ede157b1563fdb4e9748f94aee1fa82757e7ba27c7314  _site/index.html" \
-            | sha256sum --check -
-
-      - name: Apply PRD V0.3 design
-        shell: bash
-        run: |
-          set -euo pipefail
-          base64 --decode patches/v0.3.patch.gz.b64 \
-            | gzip --decompress \
-            > /tmp/v0.3.patch
-
-          (
-            cd _site
-            patch -p1 < /tmp/v0.3.patch
-          )
 
           echo "65981351a165ea7cade72427059429d398057a6f90a7ea1feae40e4925a0bf99  _site/index.html" \
             | sha256sum --check -
