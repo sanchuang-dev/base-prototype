@@ -25,18 +25,18 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Rebuild V0.3 release
+      - name: Rebuild V0.3.1 release
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p _site
 
-          cat release/v0.3/index.html.gz.b64.part.* \
+          cat release/v0.3.1/index.html.gz.b64.part.* \
             | base64 --decode \
             | gzip --decompress \
             > _site/index.html
 
-          echo "65981351a165ea7cade72427059429d398057a6f90a7ea1feae40e4925a0bf99  _site/index.html" \
+          echo "fa171baa73d582134818884289cf7dfbfec7d4d5c48a4e47d849eeeda84a76a8  _site/index.html" \
             | sha256sum --check -
 
           touch _site/.nojekyll
