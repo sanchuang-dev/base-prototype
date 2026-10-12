@@ -1,8 +1,8 @@
 
 (function(){
 'use strict';
-var pages=['home','culture','shop','bespoke','partners','account'];
-var names={home:'首页',culture:'红艾文化',shop:'礼遇甄选',bespoke:'企业定制',partners:'品牌共建',account:'我的红艾'};
+var pages=['home','culture','shop','bespoke','partners','account','trial'];
+var names={home:'首页',culture:'红艾文化',shop:'礼遇甄选',bespoke:'企业定制',partners:'品牌共建',account:'我的红艾',trial:'艾礼试用所'};
 var cart={};var scenario='节令员工福利';var quantity=100;var giftTier='premium';var unit=328;var toastTimer;
 var products=[
 {id:'classic',name:'岭南红艾 · 传家温灸礼盒',price:388},
@@ -100,6 +100,32 @@ function cartDialog(){var list=Object.keys(cart).filter(function(id){return cart
 function estimate(){var addon=0;document.querySelectorAll('[data-addon]:checked').forEach(function(e){addon+=Number(e.value)});unit=(giftTier==='premium'?328:98)+addon;var discount=quantity>=2000?.79:quantity>=500?.86:quantity>=100?.92:1;unit=Math.round(unit*discount);byId('price-unit').textContent='¥'+unit;byId('price-total').textContent='¥'+(unit*quantity).toLocaleString('zh-CN');byId('price-qty').textContent=quantity.toLocaleString('zh-CN')+' 套';}
 function quoteText(){return '岭南红艾 · 定制方案演示\n产品线：'+(giftTier==='premium'?'商务珍藏礼':'节令安康礼')+'\n场景：'+scenario+'\n数量：'+quantity+' 套\n参考单价：¥'+unit+'\n预算估算：¥'+(unit*quantity).toLocaleString('zh-CN')+'\n注：数据仅为交互原型预估，并非正式报价，未发送至任何服务端。'}
 function selectCollection(collection){var group=collection==='seasonal'?'seasonal':'premium';document.querySelectorAll('[data-line-filter]').forEach(function(b){var active=b.getAttribute('data-line-filter')===group;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});document.querySelectorAll('[data-gift-collection]').forEach(function(p){p.hidden=p.getAttribute('data-gift-collection')!==group});document.querySelector('.shop-hero').hidden=group==='seasonal';document.querySelector('.shop-seasonal-feature').hidden=group!=='seasonal'}
+
+/* Sponsored samples are display-only concepts. This prototype never charges shipping or creates applications. */
+var trialSamples={
+  scent:{name:'岭南草木香氛 · 试香小样',brand:'示例品牌 A',shipping:8},
+  cream:{name:'草本润手霜 · 便携体验装',brand:'示例品牌 B',shipping:6}
+};
+function sampleDetail(sampleId){
+  var sample=trialSamples[sampleId];
+  if(!sample)return;
+  var body='<div class="trial-modal-summary"><span class="trial-sponsored">广告 · '+escapeHTML(sample.brand)+'</span>'+
+    '<h3>'+escapeHTML(sample.name)+'</h3>'+
+    '<div class="trial-modal-cost"><div><span>小样费用</span><strong>¥0</strong></div>'+
+    '<div><span>参考配送费用（演示）</span><strong>¥'+sample.shipping+'</strong></div>'+
+    '<div class="trial-modal-total"><span>试用所示例应付</span><strong>¥'+sample.shipping+'</strong></div></div></div>'+
+    '<p>样品由广告主提供，用户承担配送费。以上金额、品牌及库存均为<strong>UI 示意</strong>，不构成可申领活动、实际运费或真实广告合作。</p>'+
+    '<p>正式申领前应明确配送范围、物流方式、限领规则与售后责任。</p>';
+  modal('小样申领 · 费用说明',body,
+    '<button class="btn full" data-action="sample-apply-demo">预览申领反馈 →</button>'+
+    '<button class="btn ghost full" data-action="dismiss">暂不申领</button>');
+}
+function sampleRecords(){
+  modal('我的试用记录','<div class="member-empty-symbol">✧</div><p style="text-align:center">暂无试用记录</p>'+
+    '<p>这是没有真实订单、支付或发货能力的页面原型；试用记录、配送状态与售后流程将在正式接入时展示。</p>',
+    '<button class="btn full" data-go="trial">探索试用所 →</button>');
+}
+
 function downloadQuote(){var blob=new Blob([quoteText()],{type:'text/plain;charset=utf-8'});var link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='岭南红艾-定制方案演示.txt';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(link.href)},800);toast('已生成本地演示方案')}
 document.addEventListener('click',function(event){
 var nav=event.target.closest('[data-go]');if(nav){event.preventDefault();var target=nav.getAttribute('data-go');if(byId('dialog').open&&byId('dialog').contains(nav))byId('dialog').close();location.hash='#/'+target;go(target);if(target==='shop'&&nav.hasAttribute('data-line'))selectCollection(nav.getAttribute('data-line'));return}
@@ -113,6 +139,10 @@ var action=event.target.closest('[data-action]');if(!action)return;
 switch(action.getAttribute('data-action')){
 case 'dismiss':byId('dialog').close();break;
 case 'cart':cartDialog();break;
+case 'sample-detail':sampleDetail(action.getAttribute('data-trial-id'));break;
+case 'sample-apply-demo':modal('申领流程演示','<p>您已查看申领反馈的设计示意。</p><p><strong>当前未扣运费、未申请试用品、未生成订单，也不会收集收货地址。</strong></p>','<button class="btn full" data-go="trial">继续逛试用所 →</button>');break;
+case 'sample-records':sampleRecords();break;
+case 'sample-sponsor':modal('品牌试用合作 · 设计预览','<p>这是一处面向广告主的赞助活动展示位。合作品牌可提供样品与广告投放预算，申领用户在确认费用后承担配送费。</p><p>当前仅展示广告位置与交互样式，不接收招商资料，也不存在已确认合作的品牌。</p>');break;
 case 'add':var id=action.getAttribute('data-id');if(!products.some(function(p){return p.id===id}))break;cart[id]=Math.min(30,(cart[id]||0)+1);saveDemo();refreshCart();toast('已加入心愿清单 · 演示');break;
 case 'favorite':var favoriteId=action.getAttribute('data-id');if(!products.some(function(p){return p.id===favoriteId}))break;
 if(favorites.indexOf(favoriteId)>=0){favorites=favorites.filter(function(x){return x!==favoriteId});toast('已取消收藏');}
