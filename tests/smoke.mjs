@@ -41,7 +41,7 @@ assert.equal(await page.locator('#account-fav-count').innerText(), '1');
 assert.match(await page.locator('#member-state').innerText(), /未进入/);
 await page.locator('#member-cta').click();
 assert.match(await page.locator('#member-state').innerText(), /演示会员/);
-await page.locator('[data-page="account"] [data-action="edit-profile"]').click();
+await page.locator('.account-actions [data-action="edit-profile"]').click();
 await page.locator('#member-alias').fill('端阳小友');
 await page.locator('#member-profile-form button[type="submit"]').click();
 assert.equal(await page.locator('#member-name').innerText(), '端阳小友');
