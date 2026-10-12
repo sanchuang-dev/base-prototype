@@ -53,3 +53,11 @@ Pages workflow 会按 **原始导出 → V0.2 → V0.3** 顺序重建页面，�
 - Workflow: `.github/workflows/pages.yml`
 - Pages: https://sanchuang-dev.github.io/base-prototype/
 - Static export uses hash routing, so no SPA rewrite is required.
+
+## Independent Lingnan prototype (separate product)
+
+- Source branch: `feat/lingnan-red-mugwort-prototype` (independently maintained; **do not merge prototype code into `main`**).
+- GitHub Pages site: original community product remains at `/`; the unrelated Lingnan demo is mounted at `/lingnan/`.
+- Publisher: `.github/workflows/pages.yml` composes both static outputs into one Pages artifact; prototype updates invoke this same publisher from their CI after browser smoke, avoiding competing deployments.
+- Prototype's files remain out of `main`; publishing this standalone demonstration does not grant any production data, ordering or payment capabilities.
+- This is a narrow documented exception to the usual environment promotion rule: `main` retains the existing static Pages demo, the independent `feat/*` branch is the only source for `/lingnan/`.
