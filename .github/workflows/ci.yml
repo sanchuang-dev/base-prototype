@@ -24,14 +24,14 @@ jobs:
           python3 - <<'PY'
           import pathlib
           html = pathlib.Path("index.html").read_text(encoding="utf-8")
-          pages = ("home", "culture", "shop", "bespoke", "partners")
+          pages = ("home", "culture", "shop", "bespoke", "partners", "account")
           for page in pages:
               assert f'data-page="{page}"' in html, f"missing page: {page}"
               assert f'data-go="{page}"' in html, f"missing navigation: {page}"
           for asset in ("app.css", "app.js"):
               assert pathlib.Path(asset).is_file(), f"missing asset {asset}"
               assert asset in html
-          print("5 routes and local asset links OK")
+          print("6 routes and local asset links OK")
           PY
       - name: Install headless browser
         run: |
