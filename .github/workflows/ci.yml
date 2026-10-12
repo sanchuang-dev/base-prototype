@@ -8,8 +8,9 @@ on:
       - "index.html"
       - "app.js"
       - "app.css"
+      - "tests/**"
 jobs:
-  static-smoke:
+  static-and-browser-smoke:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +22,8 @@ jobs:
       - name: HTML structure and local assets
         run: |
           python3 - <<'PY'
-          import pathlib, re
+          import pathlib
           html = pathlib.Path("index.html").read_text(encoding="utf-8")
-          js = pathlib.Path("app.js").read_text(encoding="utf-8")
           pages = ("home", "culture", "shop", "bespoke", "partners")
           for page in pages:
               assert f'data-page="{page}"' in html, f"missing page: {page}"
@@ -31,8 +31,21 @@ jobs:
           for asset in ("app.css", "app.js"):
               assert pathlib.Path(asset).is_file(), f"missing asset {asset}"
               assert asset in html
-          for ident in ("viewport","inquiry","qr","dialog","modal-title","modal-body","modal-actions","toast","point-count","price-unit","price-total","price-qty","verify-code"):
-              assert f'id="{ident}"' in html, f"missing element: {ident}"
-          assert "submit" in js and "estimate()" in js
-          print("5 routes, linked assets, demo interaction anchors: OK")
+          print("5 routes and local asset links OK")
           PY
+      - name: Install headless browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run interactive smoke
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/prototype-server.log 2>&1 &
+          node tests/smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prototype-smoke-screens
+          path: |
+            mobile-smoke.png
+            desktop-smoke.png
+          if-no-files-found: ignore
