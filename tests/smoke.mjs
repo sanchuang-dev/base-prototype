@@ -13,10 +13,29 @@ assert.match(await page.locator('.editorial-hero h2').innerText(), /以艾寄安
 assert.equal(await page.locator('.collection-tile').count(), 2);
 assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), true, 'mobile viewport must not overflow');
 
-await page.locator('nav .tab[data-go="culture"]').click();
+assert.equal(await page.locator('nav.tabbar .tab[data-go="trial"]').count(), 1);
+await page.locator('[data-page="home"] [data-go="culture"]').first().click();
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'culture');
 assert.match(await page.locator('.culture-editorial h3').innerText(), /艾草/);
 assert.equal(await page.locator('[data-page="culture"] [data-action="read"]').count(), 0, 'culture should not be gamified');
+
+await page.locator('nav .tab[data-go="trial"]').click();
+assert.equal(await page.locator('[data-page].active').getAttribute('data-page'),'trial');
+assert.equal(await page.locator('[data-page="trial"] .trial-card').count(),2);
+assert.equal(await page.locator('[data-page="trial"] .trial-sponsored').count(),2);
+assert.match(await page.locator('.trial-hero-note').innerText(),/样品.*¥0/);
+await page.locator('[data-page="trial"] [data-trial-id="scent"] [data-action="sample-detail"]').click();
+assert.match(await page.locator('#modal-body').innerText(),/参考配送费用/);
+assert.match(await page.locator('#modal-body').innerText(),/¥8/);
+await page.locator('#modal-actions [data-action="sample-apply-demo"]').click();
+assert.match(await page.locator('#modal-body').innerText(),/未申请试用品/);
+await page.locator('#dialog button.close').click();
+await page.locator('[data-page="trial"] [data-action="sample-records"]').click();
+assert.match(await page.locator('#modal-body').innerText(),/暂无试用记录/);
+await page.locator('#dialog button.close').click();
+await page.locator('[data-page="trial"] [data-action="sample-sponsor"]').click();
+assert.match(await page.locator('#modal-body').innerText(),/广告主/);
+await page.locator('#dialog button.close').click();
 
 await page.locator('nav .tab[data-go="shop"]').click();
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'shop');
@@ -72,6 +91,9 @@ await page.reload({waitUntil:'domcontentloaded'});
 assert.equal(await page.locator('#account-wish-count').innerText(),'0');
 assert.match(await page.locator('#member-state').innerText(), /未进入/);
 
+await page.locator('[data-page="account"] [data-action="sample-records"]').click();
+assert.match(await page.locator('#modal-body').innerText(),/暂无试用记录/);
+await page.locator('#dialog button.close').click();
 await page.locator('nav .tab[data-go="bespoke"]').click();
 await page.locator('[data-quantity="1000"]').click();
 const premiumPrice = Number((await page.locator('#price-unit').innerText()).replace(/[^\d]/g,''));
@@ -105,5 +127,5 @@ assert.equal(await desktop.locator('.showcase').isVisible(),true);
 assert.equal(await desktop.locator('.collection-tile').count(),2);
 await desktop.screenshot({path:'desktop-smoke.png',fullPage:true});
 assert.deepEqual(errors,[]);
-console.log('Brand + member smoke passed: five tabs, two gift lines, demo login/profile, favorite, local persistence, logout, clear, quotes and collaboration');
+console.log('Brand + member + sponsored samples smoke passed: five tabs, sponsor labelling, sample cost preview, empty sample records, login/profile, favorites, local persistence, quotes');
 await browser.close();
