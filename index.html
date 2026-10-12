@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#234e41">
+<meta name="description" content="岭南红艾文化传承、非遗文创礼盒、企业定制与公益共建的交互展示原型。">
+<title>岭南红艾 · 品牌交互原型</title>
+<link rel="stylesheet" href="./app.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="showcase" aria-label="演示导览">
+    <div class="showcase-mark"><span class="seal">艾</span><span>岭南红艾 <small style="color:#8e9b8d">/ HERBAL HERITAGE</small></span></div>
+    <p class="eyebrow" style="margin-top:48px">LINGNAN BOTANICAL HERITAGE · INTERACTIVE PROTOTYPE</p>
+    <h1>见草木风物，<br>承<em>岭南</em>文脉。</h1>
+    <p>从一株岭南红艾出发，让非遗文化的温度走进节令礼赠、企业关怀与公益共建。<br>这是为客户提案准备的一套可亲手体验的品牌产品原型。</p>
+    <div class="chapters">
+      <button class="chapter active" data-go="home"><span>01 / 品牌首页</span><small>品牌故事与礼遇入口 ↗</small></button>
+      <button class="chapter" data-go="culture"><span>02 / 文化科普</span><small>岭南本草与非遗传承 ↗</small></button>
+      <button class="chapter" data-go="shop"><span>03 / 礼盒商城</span><small>选品、心愿清单、溯源 ↗</small></button>
+      <button class="chapter" data-go="bespoke"><span>04 / 企业定制</span><small>智能选配与预算预案 ↗</small></button>
+      <button class="chapter" data-go="partners"><span>05 / 合作中心</span><small>渠道演示与公益共建 ↗</small></button>
+    </div>
+    <div class="row gap"><button class="btn" data-action="share">分享这份原型 ↗</button><button class="btn ghost" data-action="reset">重置演示</button></div>
+    <div class="showcase-footer" style="margin-top:26px"><strong>当前章节：</strong><span id="desktop-current">首页</span><br>可点击手机界面的底部菜单、礼盒按钮、报价选项及合作入口。<br>视觉与数字为提案样例，不代表实际交易、认证或商业业绩。</div>
+  </aside>
+  <main class="device-area">
+    <div class="device" aria-label="小程序交互原型">
+      <div class="demo-ribbon">PROTOTYPE</div>
+      <header class="appbar">
+        <div class="app-brand"><span class="seal" style="width:27px;height:27px;font-size:15px;border-width:1px">艾</span><span><strong>岭南红艾</strong><small>HERBAL HERITAGE</small></span></div>
+        <div class="appbar-right"><span class="pill" style="font-size:9px">交互演示版</span><button class="round" data-action="cart" aria-label="打开心愿清单">⌑<span class="small" data-cart-count>0</span></button><span class="avatar" title="演示用户">艾</span></div>
+      </header>
+      <div class="viewport" id="viewport">
+
+        <!-- 01: Brand landing -->
+        <section class="screen active" data-page="home" tabindex="-1" aria-label="品牌首页">
+          <div class="pill red-pill">◆ 非遗文化 · 岭南草本 · 节令礼赠</div>
+          <div class="hero mt" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUkvFdeTKsFdNyhnb-x2XCXJVClN7jHcLfrvYu-Yeuy5nXaWOQrTIW1cB-anrgCOxbHL40nHPi0xKihKpoaoiGwsu2ng6ekn4g3LRNqn_s6QpVdvNaY8HJtZY0I1OPaxv0l44VYhVXtbYM6CEVTdkcYBQtFAf1q99xyknrzlkFhybqvvKkWh4qVuEBRedlt1dYvKLiA8ixp2UjCneOzufrArqMnX3zLHr40-rijX3Q05gcPJMuOP_mwA')">
+            <span class="pill red-pill">✿ 三年陈蕴 · 手作礼遇</span>
+            <h2>岭南纯阳之草<br>岁火生金</h2>
+            <p>取山川草木之灵韵，续岭南本草之风雅。<br>把悠久的草本故事，做成一份温暖的赠礼。</p>
+            <button class="btn ghost tiny" data-go="culture">探寻岭南红艾故事 →</button>
+          </div>
+          <div class="quick-links">
+            <button data-go="culture"><b>❀</b>非遗红艾</button>
+            <button data-go="shop"><b>♡</b>岁时好礼</button>
+            <button data-go="bespoke"><b>▧</b>企业定制</button>
+            <button data-go="partners"><b>♧</b>公益共建</button>
+          </div>
+          <div class="quote">“一叶成艾，一脉相承。”<br><span class="small muted">从岭南草木文化，到当代生活的东方礼序。</span></div>
+          <div class="sec-heading"><h2>非遗文创 · 岁时好礼</h2><button data-go="shop">全部礼盒 ↗</button></div>
+          <div class="product-grid">
+            <article class="card product">
+              <img class="pic" loading="lazy" alt="红艾温灸礼盒展示图" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYjvtHVCbqiONOyLRxgxF5XYGR0aSrwSx-RmOm_-iBLy8I8sg4EjYKVAlmHXqnPOUUzgobHHgDS8lH9bgXzh75TQ9uNwNxqWr-uUI9nB3hmuFpUEreS9bUnYt748CnB5mnmNDmQtOnkQjLHaZooYzCgDS_QUvfijw0kk8_7fCP3C7EEBoJtUe3nzJXpPw22ZDoDbSToyGzjPBCAwsIjyqe9xkLcD8yTjvF1xyLIWHZvOqeIM038Ajy9g">
+              <div class="details"><span class="pill red-pill">端午好礼</span><h3>岁岁温阳 · 非遗随身灸礼盒</h3><div class="row between"><strong class="red">¥298</strong><button class="btn tiny" data-go="shop">了解礼盒</button></div></div>
+            </article>
+            <article class="card product">
+              <img class="pic" loading="lazy" alt="红艾传统香礼展示图" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm30FVKpcVtblzjV2hzFKmt7Gj-oKRzmljiM7BeMfYRV7z6sqjrAGDmb8lSQ3dNPtp6jP0imTZlrdHZhU2GPaULON00xNa3xit0tj5ZFTQZGaRz41A0iqjVqWwnkFR5yTyfkX6TOmb2EvvVhK8y1iddXbPhluu5WsIkp5ze8qATxD96R1HVcQUxHK4S0WFM_ieVtxLPrSrYFHrYfj9e8nGlzrVC7sM6QZDWCqqpX57r-zmIsMaLVzrtQ">
+              <div class="details"><span class="pill">文人香道</span><h3>节气艾香 · 紫砂香盘雅礼</h3><div class="row between"><strong class="red">¥168</strong><button class="btn tiny" data-go="shop">了解礼盒</button></div></div>
+            </article>
+          </div>
+          <div class="sec-heading"><h2>让文化与善意同行</h2><button data-go="partners">共建计划 ↗</button></div>
+          <div class="card card-pad" style="background:#edf2eb"><p class="label gold">CULTURE × COMMUNITY</p><div class="story-head">每一份节令心意，<br>都可以延续一份乡土文化。</div><p class="story-body">让非遗科普、乡村草本与城市礼赠建立更有温度的连接。点击了解合作模式及可追溯的公益方案设计。</p><button class="btn" data-go="partners">了解公益共建 →</button></div>
+          <div class="sec-heading"><h2>源起 · 一草一木</h2></div><div class="info-item"><span class="info-icon">✺</span><div><strong>产地、工艺与材料可被讲述，也应当可被验证</strong><p>以文化叙事为起点，商业化时仍需建立真实批次溯源、产地凭证和质量证明。</p></div></div>
+          <p class="footer-note">岭南红艾 · 产品概念展示，不含实际销售与功效承诺</p>
+        </section>
+
+        <!-- 02: Culture -->
+        <section class="screen" data-page="culture" tabindex="-1" aria-label="文化科普">
+          <div class="banner" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4bBJiOUTAdD3G4F8wgUTrWodrACsKgda41QnER3qXAWVXjSXdiz6JMV6erVa3VZVjFID16jh58S_A3oum4FrQ76P0aCgwrRbXEYYmqCT9M23fWwSGxQq_f9Tdjg52its9EU73Y5ZFbQNjSlsWIMMHWUsKAi_BADy1MpCoKp9WCEQjsxUWkJIydeq6uiOZrjjCM4f39qU0CwT_gDpMkgrxDFac7R9AI2-Ey7Cc_6ktT69uq_1pwVnhaQ')">
+            <span class="pill red-pill">非遗传承 · 岭南本草</span>
+            <h2>草木有灵<br>南艾有韵</h2>
+            <p>一株红艾，生于南粤山水之间。<br>自民间生活至岁时礼俗，留下一脉草木记忆。</p>
+          </div>
+          <div class="sec-heading"><h2>每日修德研读</h2><span class="pill">今日主题</span></div>
+          <article class="card card-pad">
+            <p class="label gold">BOTANICAL NOTES · 001</p>
+            <h3 class="story-head">南艾与岭南：<br>草木如何成为民间文化</h3>
+            <p class="story-body">岭南四时温润，百姓形成了以草本香囊、端阳挂艾、节令香礼寄托平安愿望的生活传统。从草叶形态到晒制技艺，每一处细节都有值得记录的故事。</p>
+            <button class="btn full" data-action="read">✦ 完成今日研读 · 领取演示积分</button>
+            <p class="center small muted">本次浏览积分：<strong id="point-count">0</strong> 点 · 仅此会话有效</p>
+          </article>
+          <div class="sec-heading"><h2>岭南本草图鉴</h2><button data-action="intro">格物致知 ↗</button></div>
+          <div class="info-list">
+            <div class="info-item"><span class="info-icon">◉</span><div><strong>观色 · 草木初识</strong><p>观察叶片、茎色和自然纤维纹理；不同产地与加工方式可能带来外观差异。</p></div></div>
+            <div class="info-item"><span class="info-icon">♧</span><div><strong>闻香 · 岁月留香</strong><p>从初采青草气息到干燥陈放，留意气味变化与保存条件。</p></div></div>
+            <div class="info-item"><span class="info-icon">✺</span><div><strong>识艺 · 手作温度</strong><p>选材、晾晒、筛选、收储，是手工草本制品中值得展示的工序。</p></div></div>
+          </div>
+          <div class="sec-heading"><h2>传统制艾 · 工序六章</h2></div>
+          <div class="timeline">
+            <article><strong>壹 · 择时采艾</strong><p>尊重当地时令与可持续采收习惯。</p></article>
+            <article><strong>贰 · 阴凉晾晒</strong><p>观察草本自然脱水过程，避免不当存储。</p></article>
+            <article><strong>叁 · 适时陈放</strong><p>按实际工艺要求记录时间与环境。</p></article>
+            <article><strong>肆 · 石臼捣绒</strong><p>展示传统工具与植物纤维加工工艺。</p></article>
+            <article><strong>伍 · 手工筛选</strong><p>分离粗梗、杂质，形成不同质地的成品。</p></article>
+            <article><strong>陆 · 包装留档</strong><p>保留批次、来源及工艺记录以供查询。</p></article>
+          </div>
+          <div class="card card-pad" style="background:#e9efe8"><span class="pill red-pill">善愿共济</span><h3 class="story-head">以文化科普连接社区</h3><p class="story-body">这里可以展示真实的传承人故事、公益项目进度和公开账目。正式上线前需要逐条完成真实性与授权核验。</p><button class="btn full" data-go="partners">看看共建计划 →</button></div>
+          <p class="demo-banner">草本文化知识不是医学诊断或治疗建议；产品功效、认证和非遗资质需独立证实。</p>
+        </section>
+
+        <!-- 03: Gift shop -->
+        <section class="screen" data-page="shop" tabindex="-1" aria-label="礼盒商城">
+          <div class="row between mb"><span class="pill red-pill">✿ 岁时风雅 · 温润有礼</span><button class="round" data-action="cart" aria-label="查看礼盒心愿清单">♧</button></div>
+          <div class="shop-hero">
+            <img alt="新中式岭南红艾礼盒陈列" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwrjlLVsoOqQWNXDEaKcqLqcdPjjjrRAbq9HpcPkH_LdQwsImmNlFxuP5Hev1aE7srpZUPqUH0v3idd00wltEiksoHP9kZmDDm5ewXTOijRYMtDbqv3vWN8Cu_CTLHZsm6YNCaxlfWkzElMgxih8f9o74NfFzZogcU5DIM5LcMdwgkw5Fgnsv29KKqv7qtOcGh84fF5Q7MN7DwPuH62VTFogeMQxisQQfrwWrnZlFUQsaiP-YzsI4_9A">
+            <div class="details"><span class="pill red-pill">主推典藏 · 概念商品</span><h2>岭南红艾 · 传家温灸礼盒</h2><p>古法工艺与当代包装设计相遇，以礼盒为载体承载草本故事与节令祝福。</p><div class="row between"><div><strong class="price">¥388</strong> <del class="small muted">¥458</del></div><button class="btn" data-action="add" data-id="classic">加入心愿清单 ＋</button></div></div>
+          </div>
+          <div class="split mt"><button class="card card-pad" data-go="bespoke" style="text-align:left;color:var(--green)"><strong>▧ 企业采购直通 →</strong><p class="small muted">礼赠定制 · 预算即算</p></button><button class="card card-pad" data-action="share" style="text-align:left;color:var(--red)"><strong>♡ 微信礼品卡构想 →</strong><p class="small muted">分享演示链接</p></button></div>
+          <div class="sec-heading"><h2>雅致风物 · 礼盒系列</h2></div>
+          <div class="filters" aria-label="礼盒筛选">
+            <button class="filter active" data-filter="all">全部礼盒</button><button class="filter" data-filter="incense">文创香礼</button><button class="filter" data-filter="daily">家居温养</button><button class="filter" data-filter="season">节令伴手礼</button>
+          </div>
+          <div class="product-grid">
+            <article class="card product" data-category="incense"><img class="pic" loading="lazy" alt="古法红艾香篆礼盒" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQHvCVHLTQB3gkjBdFHNEcsH3tugO-A4iCBEpvnu46LvfYU2FqC3babA34CK1_X2_3FDwysOpCZlRg6QkTSUbX9uh6a1mUB3APaldSofFj_16Oi3xlhrrQqyaeN6TTl5aOf9RGGpxlRck2QUnk5w87-i4IB05KcBnsgdJj-qoP2AseD7il15Chq-2fSBHDGouKO1hWvra8WafN8cOC3f3h4okZVV6zm2o5cYZz_B8IY7gWs4yUQujPaw"><div class="details"><span class="pill">文人香道</span><h3>归元温阳 · 古法香篆礼盒</h3><p>铜炉与香粉，沉静如诗</p><div class="row between"><strong class="price">¥218</strong><button class="add" data-action="add" data-id="scent" aria-label="加入香篆礼盒">＋</button></div></div></article>
+            <article class="card product" data-category="daily"><img class="pic" loading="lazy" alt="草木护颈带" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2X7er8zzMNo0qeXF_MXRbbgdowUHp-chHLRbfrlidiqbxMveaqCe0G6xFcArvTh4UFPEGDWIzO9GGxAgfWdf0XKy3b1I0zIzLkrEHUil3G5XINS_4Gcyl4OFUIeCvVsq0T_8YptcUF2UbzX7ONWIlcOecRwDyEydEa2zd7hRSblE6FCsc0y3STckBg-4o6dl0AtvIiUxePNN7pZRp2-Nj1pfF9k7NcCIB7zVwnUuh6vjpYDni4Jizvg"><div class="details"><span class="pill">草木植物染</span><h3>岁岁安康 · 草木护颈带</h3><p>自然肌理，日常相伴</p><div class="row between"><strong class="price">¥158</strong><button class="add" data-action="add" data-id="neck" aria-label="加入护颈带">＋</button></div></div></article>
+            <article class="card product" data-category="season"><img class="pic" loading="lazy" alt="非遗刺绣香囊" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgxB-Jt1USzyIH7dv0GoivWKoCsq_zv-Bpu0McPl-QdNgXpbIuAdisp9D8PEpWchS3RvRT0JHmO5a6LvpAeO2L6e5w3Whtw0VtLKIzsmpcN6cd7aHljO6itnOre3CgzM9AYatXDdpqkSKY4QSfKI75L9plnd15vrkbn10__QPFJKpI4uN4sKTowy_ZiJ7i9Lq2DjPpfUWnRPS5iTJNDlE320ra3KHArC-SDAnJVXo-11svG2anVieDCA"><div class="details"><span class="pill red-pill">端阳雅物</span><h3>端阳福艾 · 刺绣香囊</h3><p>节令绣艺，随身祝愿</p><div class="row between"><strong class="price">¥99</strong><button class="add" data-action="add" data-id="sachet" aria-label="加入香囊">＋</button></div></div></article>
+            <article class="card product" data-category="daily"><img class="pic" loading="lazy" alt="红艾陈艾条" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8PLgfMKzM6iiZBK_1JVvRlkMJ-jQI3nlcMLBmZA3C0NkcCv603LaD1zqGQtRrQ1r-3lTxCC8H72cq5fGntRvkdrTUfqqTa3y_glR5q37xpIu5hNHo0vVUBhqlT8lEC1kI0qMwxSYbU9fGEe28H8LGHRJD8HDQg_AS0xc_IgAXFRhdmqdqJwIBPXUp5ruD7H66zktvYn3FlYCVJjcO27xomugVTeSWBqEZPuAlZ23jC9tSfGU5YJWZuQ"><div class="details"><span class="pill">匠心草本</span><h3>地道纯绒 · 陈艾条</h3><p>传统工序，批次待溯源</p><div class="row between"><strong class="price">¥188</strong><button class="add" data-action="add" data-id="moxa" aria-label="加入陈艾条">＋</button></div></div></article>
+          </div>
+          <div class="sec-heading"><h2>一盒一码 · 溯源体验</h2></div>
+          <div class="card card-pad"><p class="story-body">真实版本可输入防伪码查询生产批次与来源。这里先演示流程，不会返回虚构的认证结果。</p><div class="field"><label for="verify-code">包装防伪码</label><input id="verify-code" maxlength="32" placeholder="输入任意演示编码（如 LNHA2026）"></div><button class="btn full" data-action="verify">模拟溯源查询 →</button></div>
+          <p class="footer-note">价格、库存、礼盒图片均为视觉概念及示意</p>
+        </section>
+
+        <!-- 04: Corporate bespoke -->
+        <section class="screen" data-page="bespoke" tabindex="-1" aria-label="企业定制">
+          <div class="card card-pad" style="background:#113d31;color:white;padding:22px">
+            <p class="label gold">CORPORATE BESPOKE / LINGNAN HERITAGE</p><h2 style="font:600 24px/1.6 var(--serif);margin:15px 0">以非遗岭南红艾<br>传东方礼遇之道</h2><p style="font-size:11px;line-height:1.9;color:#dae6d9">员工节令关怀、企业贵宾礼遇、文化活动纪念，定制一份独具岭南气韵的心意。</p><span class="pill gold-pill">✧ 专属提案 · 交互概念版</span>
+          </div>
+          <div class="sec-heading"><h2>智能方案配置 · 预算测算</h2><span class="pill">即时出案</span></div>
+          <div class="card card-pad">
+            <div class="desk-label"><strong class="small">01 · 选择定制场景</strong></div>
+            <div class="choice-grid"><button class="choice active" data-scenario="节令员工福利" aria-pressed="true">✿ 节令员工福利</button><button class="choice" data-scenario="高端商务赠礼" aria-pressed="false">◇ 高端商务赠礼</button><button class="choice" data-scenario="公益文创联名" aria-pressed="false">♡ 公益文创联名</button><button class="choice" data-scenario="企业大会伴手礼" aria-pressed="false">▧ 企业大会伴手礼</button></div>
+            <div class="desk-label mt"><strong class="small">02 · 预计采购数量</strong></div>
+            <div class="choice-grid"><button class="choice active" data-quantity="100" aria-pressed="true">50–100 份</button><button class="choice" data-quantity="300" aria-pressed="false">100–500 份</button><button class="choice" data-quantity="1000" aria-pressed="false">500–2000 份</button><button class="choice" data-quantity="3000" aria-pressed="false">2000 份以上</button></div>
+            <div class="desk-label mt"><strong class="small">03 · 选择专属工艺（可多选）</strong></div>
+            <label class="checkbox-item"><input type="checkbox" data-addon value="0" checked> 企业烫金 Logo <small>标准配套</small></label>
+            <label class="checkbox-item"><input type="checkbox" data-addon value="8"> 企业文化特种纸腰封 <small>+¥8 / 套</small></label>
+            <label class="checkbox-item"><input type="checkbox" data-addon value="12"> 激光雕刻祝福语与寄语牌 <small>+¥12 / 套</small></label>
+            <label class="checkbox-item"><input type="checkbox" data-addon value="6"> 一物一码品牌溯源设计 <small>+¥6 / 套</small></label>
+            <div class="estimate"><p class="label">INSTANT ESTIMATE · 模拟测算</p><div class="row between"><div><strong id="price-unit">¥141</strong><span class="small muted"> / 套</span></div><span class="pill" id="price-qty">100 套</span></div><p>预估总预算：<b id="price-total">¥14,100</b></p><p>计算基于演示价格和假设阶梯折扣，供交互展示；正式报价以实际合同为准。</p></div>
+            <button class="btn full" data-action="quote">✦ 一键生成方案与报价预案 →</button>
+          </div>
+          <div class="sec-heading"><h2>定制灵感 · 精选案例</h2></div>
+          <div class="card image-card"><img style="height:175px" alt="中式定制礼盒设计示例" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABjFZyzKRmoLleFGHU3O2toJ1hL8u9RiwOIry9ZgREwxUjAwc3FrpMGzMmJMBZMEHriVRIi88ux65YdYrht4OdPRwun_GY7gCeanJbboDqiaJg1Q1_maTF57xlrPddgNVivsRcr1Wrd4l-Fi5cxaNxX5OxFdccpzoZ_UsHPVTB3tyCPnvmS26fBjCe6HkpfbYLnvjEZ68KaC617yDBeoobzDkFqNWaOS8vCFxrZls_s-AnmhUPuDYB_Q"><div class="card-pad"><span class="pill red-pill">设计概念 · 非真实客户案例</span><h3 class="story-head">“艾韵芳华” · 节令福礼</h3><p class="story-body">宋式纹样、企业烫印、草本织物与贺卡，组合成兼顾文化叙事与品牌识别的一套礼赠方案。</p></div></div>
+          <div class="card image-card mt"><img style="height:175px" alt="高端黑金中式礼盒示意" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcgsaQifsA6SuSdXfu5z2qkHtmIShAJwq5p06WA_0UtSwSLFJ_llvOiWwmuy2KZxBvGz__8Vpe4ifHgSf3PDhNThzZqAbuZs835SyNjn5zp353V-pO1ThrQew94xqSMxcXeHCcvy_VJa_it3kHjTYvO_IYJHhyNGQEQhzdZIJe978CfEw8hIBmNmjs8IL0_I7SWjo9j3m0ik5Z9IIRhc_DRtJ-3_QztwtsQxaV2By4ZgJOJ98y2jbt2Q"><div class="card-pad"><span class="pill">设计概念 · VIP 礼序</span><h3 class="story-head">“本草养心” · 黑金典藏</h3><p class="story-body">以中式陈列、烫印工艺与个性化铭牌表达克制而郑重的礼节。</p></div></div>
+          <div class="sec-heading"><h2>免费申请样盒 · 体验表单</h2></div>
+          <form id="inquiry" class="card card-pad">
+            <div class="field"><label for="company">企业或机构名称 *</label><input id="company" name="company" required maxlength="60" placeholder="例如：岭南文化发展有限公司"></div>
+            <div class="field"><label for="contact">联系人称呼 *</label><input id="contact" name="contact" required maxlength="25" placeholder="如何称呼您"></div>
+            <div class="field"><label for="phone">联系电话 *</label><input id="phone" name="phone" type="tel" required pattern="[0-9+() -]{7,20}" placeholder="请输入联系电话"></div>
+            <div class="field"><label for="requirements">定制期望（选填）</label><textarea id="requirements" name="requirements" maxlength="500" placeholder="例如：端午节 300 套，期待定制企业标识"></textarea></div>
+            <p class="small muted">演示版本不会上传、储存或发送任何填写内容，请勿输入真实敏感信息。</p>
+            <button type="submit" class="btn red-btn full">模拟提交样盒申请 →</button>
+          </form>
+          <p class="footer-note">所有交互均在本地完成 · 不会联系销售人员</p>
+        </section>
+
+        <!-- 05: Partner -->
+        <section class="screen" data-page="partners" tabindex="-1" aria-label="合作中心">
+          <div class="row gap"><span class="pill red-pill">◆ 共建计划 · 演示机构</span><span class="pill">DEMO / SAMPLE</span></div>
+          <div class="sec-heading"><h2>与岭南草本，一起生长</h2></div>
+          <div class="card card-pad" style="background:#edf3ee">
+            <div class="row gap"><span class="avatar" style="width:36px;height:36px;font-size:18px">善</span><div><strong style="font-size:12px">南粤文化公益共建计划</strong><p class="small muted" style="margin:2px 0">渠道样例：LNHA-DEMO-001 · 非真实机构</p></div></div>
+            <div class="section-line" style="margin:13px 0"></div>
+            <p class="label center">PARTNER CHANNEL / SCHEMATIC QR</p>
+            <div class="qr" id="qr" role="img" aria-label="渠道推广码视觉示意，不可扫描"></div>
+            <p class="center small muted">扫码图形仅作视觉示意 · 不包含真实二维码数据</p>
+            <button class="btn full" data-action="channel">了解渠道推广码机制 →</button>
+          </div>
+          <div class="sec-heading"><h2>公益协作 · 数据看板</h2><span class="pill gold-pill">假设数据</span></div>
+          <div class="split"><div class="stat"><strong>8,420</strong><span>内容触达（演示）</span></div><div class="stat"><strong>1,635</strong><span>参与互动（演示）</span></div><div class="stat"><strong>328</strong><span>文化礼赠（演示）</span></div><div class="stat"><strong>¥16,400</strong><span>公益筹款（演示）</span></div></div>
+          <div class="sec-heading"><h2>真实项目需要什么？</h2></div>
+          <div class="info-list">
+            <div class="info-item"><span class="info-icon">▦</span><div><strong>机构渠道识别</strong><p>独立渠道码、可核验机构身份与活动归属，避免重复归因。</p></div></div>
+            <div class="info-item"><span class="info-icon">♧</span><div><strong>可公开的善款去向</strong><p>真实凭证、受益方反馈与资金进度，逐笔可核对。</p></div></div>
+            <div class="info-item"><span class="info-icon">▤</span><div><strong>共创文化内容</strong><p>社区讲座、非遗故事、活动招募与志愿回访，形成共建闭环。</p></div></div>
+          </div>
+          <div class="sec-heading"><h2>共建单位 · 榜单样式</h2><span class="pill gold-pill">虚拟示例</span></div>
+          <div class="leaderboard"><article><b>01</b><strong>南粤文化交流社（演示）</strong><span>12,400</span></article><article><b>02</b><strong>岭南青年公益组（演示）</strong><span>8,930</span></article><article><b>03</b><strong>粤北乡土研习会（演示）</strong><span>5,410</span></article></div>
+          <div class="card card-pad mt" style="background:var(--green);color:#fff"><p class="label gold">PARTNERSHIP INQUIRY</p><h3 style="font:600 20px/1.5 var(--serif)">共同守护，一份岭南草木的文化记忆。</h3><p style="font-size:11px;color:#dae8de;line-height:1.85">围绕企业节令关怀、文化展陈、地方公益与渠道活动，共创有辨识度的文化项目。</p><button class="btn ghost full" data-action="apply">申请成为共建伙伴 →</button></div>
+          <p class="demo-banner">本页所有渠道 ID、统计数字、排行榜与机构名均为演示数据；不存在真实归因、捐赠或审核行为。</p>
+          <p class="footer-note">岭南红艾 · 合作中心产品构想</p>
+        </section>
+
+      </div>
+      <nav class="tabbar" aria-label="原型底部导航">
+        <button class="tab active" data-go="home" aria-current="page"><b>⌂</b>首页</button>
+        <button class="tab" data-go="culture"><b>☷</b>文化科普</button>
+        <button class="tab" data-go="shop"><b>♙</b>礼盒商城</button>
+        <button class="tab" data-go="bespoke"><b>▤</b>企业定制</button>
+        <button class="tab" data-go="partners"><b>❧</b>合作中心</button>
+      </nav>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="dialog" aria-labelledby="modal-title"><button class="close" aria-label="关闭弹窗" data-action="dismiss">×</button><h2 id="modal-title"></h2><div id="modal-body"></div><div id="modal-actions"></div></dialog>
+</body>
+</html>

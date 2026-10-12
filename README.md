@@ -1,55 +1,22 @@
-# Base Prototype
+# 岭南红艾 · 客户演示原型
 
-社区家庭健康服务平台高保真原型的 GitHub Pages 演示仓库。
+本分支 \`feat/lingnan-red-mugwort-prototype\` 是 **独立于 \`main\` 所载社区家庭健康服务平台** 的岭南红艾演示项目，不向 \`main\` 合并，亦不接管其 GitHub Pages。
 
-当前产品契约：**V0.3**
+## 使用
 
-## Product docs
+直接打开 \`index.html\`，也可用任意静态服务器托管。无须构建、登录、API、密钥或数据库。
 
-- V0.3 产品结论：`docs/PRD-V0.3.md`
+- 五个页面：品牌首页 / 文化科普 / 礼盒商城 / 企业定制 / 合作中心。
+- 导览、筛选、心愿清单、阅读积分、定制报价估算、预案文字下载、模拟验真和预约交互。
+- 适配手机和电脑；电脑端为带演示导览的展示台。
+- 原型自带说明：商家、合作、公益、订单、产品功效、溯源与数字均为演示样例；**不得作为实际商用证明**。
 
-## Prototype source
+## 视觉来源
 
-原始 Open Design 导出为单文件 `index.html`。仓库以无损 gzip + base64 文本分片保存原始导出：
+根据用户上传的 Stitch 五屏导出（首页合作看板、文化科普、品牌首页、礼盒商城、企业定制）与 \`lingnan_red_mugwort_botanical_heritage/DESIGN.md\` 改编。承袭深草木绿、朱砂红、宣纸白、新中式宋体层级。页面图片引用 Stitch 导出的远程图片地址；断网或资源失效可能影响部分配图，应在商用前替换成具有明确版权的本地资源。
 
-`source/index.html.gz.b64.part.*`
+## 开发约定
 
-原始导出 SHA-256：
-
-`62b6efd29adb48d8cd6c73920d4258d3561629ac8ad74c6b4b0a6c13fa3b9438`
-
-V0.2 修订：
-
-`patches/v0.2.patch.gz.b64`
-
-V0.2 SHA-256：
-
-`aa5623463ac4d8760b4ede157b1563fdb4e9748f94aee1fa82757e7ba27c7314`
-
-V0.3 修订：
-
-`patches/v0.3.patch.gz.b64`
-
-V0.3 最终页面 SHA-256：
-
-`65981351a165ea7cade72427059429d398057a6f90a7ea1feae40e4925a0bf99`
-
-Pages workflow 会按 **原始导出 → V0.2 → V0.3** 顺序重建页面，并在每一步做哈希校验。任何一步不一致，发布都会直接失败。
-
-## V0.3 focus
-
-- 首页回归低心智结构：**Banner → 常用服务 → 社区消息 → 今日社区 → 积分 → 健康 → 惠生活**
-- 广电服务在首页独立强露出
-- **手机卡 / 宽带 / 电视 / 上门服务**直接可见，不使用行业黑话
-- 固定金刚区：社区广播 / 健康服务 / 党群文化 / 社区活动
-- 其它服务入口按街道项目资源配置，例如学习服务、办事指引、社区食堂、街坊消息
-- 社区广播作为公共触达，小程序承接重听、文字、活动和服务
-- 广播公共属性与商业内容保持边界
-- 五个一级 Tab 保持：首页 / 社区 / 健康 / 惠生活 / 我的
-
-## Deployment
-
-- Branch: `main`
-- Workflow: `.github/workflows/pages.yml`
-- Pages: https://sanchuang-dev.github.io/base-prototype/
-- Static export uses hash routing, so no SPA rewrite is required.
+- 这是可体验的静态原型，所有数据只在当前页面内模拟，不写真实后台，也不伪造真实支付或验真结果。
+- 所有功能新增都只维护本分支。保留 \`main\` 的现有社区产品及 Pages 发布流程，避免两条产品线交叉。
+- 正式部署到独立域名之前，另作发布设计，不复用 \`main\` 的 Pages 入口。

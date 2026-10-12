@@ -1,0 +1,38 @@
+name: Prototype CI
+on:
+  push:
+    branches:
+      - "feat/lingnan-red-mugwort-prototype"
+  pull_request:
+    paths:
+      - "index.html"
+      - "app.js"
+      - "app.css"
+jobs:
+  static-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: JavaScript syntax
+        run: node --check app.js
+      - name: HTML structure and local assets
+        run: |
+          python3 - <<'PY'
+          import pathlib, re
+          html = pathlib.Path("index.html").read_text(encoding="utf-8")
+          js = pathlib.Path("app.js").read_text(encoding="utf-8")
+          pages = ("home", "culture", "shop", "bespoke", "partners")
+          for page in pages:
+              assert f'data-page="{page}"' in html, f"missing page: {page}"
+              assert f'data-go="{page}"' in html, f"missing navigation: {page}"
+          for asset in ("app.css", "app.js"):
+              assert pathlib.Path(asset).is_file(), f"missing asset {asset}"
+              assert asset in html
+          for ident in ("viewport","inquiry","qr","dialog","modal-title","modal-body","modal-actions","toast","point-count","price-unit","price-total","price-qty","verify-code"):
+              assert f'id="{ident}"' in html, f"missing element: {ident}"
+          assert "submit" in js and "estimate()" in js
+          print("5 routes, linked assets, demo interaction anchors: OK")
+          PY
