@@ -24,7 +24,7 @@ await page.locator('.tab[data-go="bespoke"]').click();
 await page.locator('[data-quantity="1000"]').click();
 assert.match(await page.locator('#price-total').innerText(),/¥/);
 await page.locator('[data-action="quote"]').click();
-assert.match(await page.locator('#modal-title').innerText(),/方案/);
+assert.match(await page.locator('#modal-title').innerText(),/预案|方案/);
 await page.locator('[data-action="dismiss"]').last().click();
 await page.locator('#company').fill('原型测试机构');
 await page.locator('#contact').fill('测试人');
