@@ -13,13 +13,20 @@ assert.match(await page.locator('.editorial-hero h2').innerText(), /以艾寄安
 assert.equal(await page.locator('.collection-tile').count(), 2);
 assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), true, 'mobile viewport must not overflow');
 
-assert.equal(await page.locator('nav.tabbar .tab[data-go="trial"]').count(), 1);
-await page.locator('[data-page="home"] [data-go="culture"]').first().click();
+assert.equal(await page.locator('nav.tabbar .tab[data-go="culture"]').count(), 1);
+assert.equal(await page.locator('nav.tabbar .tab[data-go="trial"]').count(), 0);
+await page.locator('nav .tab[data-go="culture"]').click();
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'culture');
 assert.match(await page.locator('.culture-editorial h3').innerText(), /艾草/);
 assert.equal(await page.locator('[data-page="culture"] [data-action="read"]').count(), 0, 'culture should not be gamified');
 
-await page.locator('nav .tab[data-go="trial"]').click();
+await page.locator('nav .tab[data-go="shop"]').click();
+assert.equal(await page.locator('[data-page].active').getAttribute('data-page'),'shop');
+assert.equal(await page.locator('[data-page="shop"] .gift-channel').count(),2);
+assert.equal(await page.locator('[data-page="shop"] .trial-discovery-tile').count(),2);
+await page.locator('[data-page="shop"] .gift-channel[data-go="trial"]').click();
+assert.equal(await page.locator('nav .tab[data-go="shop"]').getAttribute('aria-current'),'page');
+assert.equal(await page.locator('nav .tab[data-go="culture"]').getAttribute('aria-current'),'false');
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'),'trial');
 assert.equal(await page.locator('[data-page="trial"] .trial-card').count(),2);
 assert.equal(await page.locator('[data-page="trial"] .trial-sponsored').count(),2);
@@ -37,7 +44,7 @@ await page.locator('[data-page="trial"] [data-action="sample-sponsor"]').click()
 assert.match(await page.locator('#modal-body').innerText(),/广告主/);
 await page.locator('#dialog button.close').click();
 
-await page.locator('nav .tab[data-go="shop"]').click();
+await page.locator('[data-page="trial"] .gift-channel[data-go="shop"]').click();
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'shop');
 assert.equal(await page.locator('[data-page="shop"] .shop-hero').isVisible(), true);
 assert.equal(await page.locator('[data-page="shop"] [data-gift-collection]:visible').count(), 2);
@@ -127,5 +134,5 @@ assert.equal(await desktop.locator('.showcase').isVisible(),true);
 assert.equal(await desktop.locator('.collection-tile').count(),2);
 await desktop.screenshot({path:'desktop-smoke.png',fullPage:true});
 assert.deepEqual(errors,[]);
-console.log('Brand + member + sponsored samples smoke passed: five tabs, sponsor labelling, sample cost preview, empty sample records, login/profile, favorites, local persistence, quotes');
+console.log('Gift IA + member + sponsored samples smoke passed: culture navigation preserved; shopping contains nested trial; sponsor disclosure, local demo identity, favorites, quotes');
 await browser.close();
