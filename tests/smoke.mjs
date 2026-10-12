@@ -31,7 +31,7 @@ assert.equal(await page.locator('.shop-hero').isVisible(), true);
 await page.locator('[data-page="shop"] [data-action="add"]').first().click();
 await page.locator('[data-page="shop"] [data-action="cart"]').click();
 assert.match(await page.locator('#modal-title').innerText(),/心愿清单/);
-await page.locator('#dialog [data-action="dismiss"]').click();
+await page.locator('#dialog button.close').click();
 
 await page.locator('nav .tab[data-go="bespoke"]').click();
 await page.locator('[data-quantity="1000"]').click();
@@ -41,13 +41,13 @@ const seasonalPrice = Number((await page.locator('#price-unit').innerText()).rep
 assert.ok(seasonalPrice < premiumPrice, 'seasonal price must be below signature line');
 await page.locator('[data-action="quote"]').click();
 assert.match(await page.locator('#modal-body').innerText(),/节令安康礼/);
-await page.locator('#dialog [data-action="dismiss"]').click();
+await page.locator('#dialog button.close').click();
 await page.locator('#company').fill('原型测试机构');
 await page.locator('#contact').fill('测试人');
 await page.locator('#phone').fill('13800138000');
 await page.locator('#inquiry button[type="submit"]').click();
 assert.match(await page.locator('#modal-body').innerText(),/没有发送/);
-await page.locator('#dialog [data-action="dismiss"]').click();
+await page.locator('#dialog button.close').click();
 
 await page.locator('nav .tab[data-go="home"]').click();
 await page.locator('[data-page="home"] [data-go="partners"]').click();
