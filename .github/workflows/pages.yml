@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_call:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/pages.yml"
 
 permissions:
   contents: read
@@ -147,12 +153,43 @@ jobs:
           sha256sum _site/index.html
           touch _site/.nojekyll
 
+      - name: Checkout independent Lingnan prototype
+        uses: actions/checkout@v4
+        with:
+          ref: feat/lingnan-red-mugwort-prototype
+          path: _lingnan_source
+          persist-credentials: false
+
+      - name: Publish Lingnan prototype in its own subdirectory
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check _lingnan_source/app.js
+          mkdir -p _site/lingnan
+          cp _lingnan_source/index.html _lingnan_source/app.css _lingnan_source/app.js _site/lingnan/
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+
+          root = Path('_site')
+          assert (root/'index.html').stat().st_size > 5000, "existing community site must stay intact"
+          folder = root/'lingnan'
+          for asset in ('index.html', 'app.css', 'app.js'):
+              assert (folder/asset).stat().st_size > 100, f"missing Lingnan asset: {asset}"
+          html = (folder/'index.html').read_text(encoding='utf-8')
+          for page in ('home', 'culture', 'shop', 'bespoke', 'partners'):
+              assert f'data-page="{page}"' in html, f"missing route {page}"
+          assert 'href="./app.css"' in html and 'src="./app.js"' in html
+          print('Composite Pages bundle includes unchanged main root and /lingnan/ assets.')
+          PY
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
