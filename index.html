@@ -22,7 +22,8 @@
       <button class="chapter" data-go="shop"><span>03 / 礼遇甄选</span><small>选品、心愿清单、溯源 ↗</small></button>
       <button class="chapter" data-go="bespoke"><span>04 / 企业礼赠</span><small>智能选配与预算预案 ↗</small></button>
       <button class="chapter" data-go="partners"><span>05 / 品牌共建</span><small>文化与品牌合作 ↗</small></button>
-      <button class="chapter" data-go="account"><span>06 / 我的红艾</span><small>演示身份、礼单与收藏 ↗</small></button>
+      <button class="chapter" data-go="trial"><span>06 / 艾礼试用所</span><small>品牌赞助 · 免费小样 · 运费自理 ↗</small></button>
+      <button class="chapter" data-go="account"><span>07 / 我的红艾</span><small>演示身份、礼单与收藏 ↗</small></button>
     </div>
     <div class="row gap"><button class="btn" data-action="share">分享这份原型 ↗</button><button class="btn ghost" data-action="reset">重置演示</button></div>
     <div class="showcase-footer" style="margin-top:26px"><strong>当前章节：</strong><span id="desktop-current">首页</span><br>可点击手机界面的底部菜单、礼盒按钮、报价选项及合作入口。<br>视觉与数字为提案样例，不代表实际交易、认证或商业业绩。</div>
@@ -64,6 +65,7 @@
               <div class="collection-copy"><span>02 / THE SEASONAL COLLECTION</span><h3>节令安康礼</h3><p>以岁时为约，以平安为念。<br>为亲友、同事与团队，送一份恰到好处的祝福。</p><button class="collection-link" data-go="shop" data-line="seasonal">鉴赏节令系列 <span>↗</span></button></div>
             </article>
           </div>
+          <button class="trial-home-teaser" data-go="trial"><span class="trial-teaser-icon" aria-hidden="true">礼</span><span><small>BRAND TRIAL STUDIO · 品牌赞助</small><strong>艾礼试用所</strong><em>精选小样免费申领，用户自付运费</em></span><span class="trial-teaser-arrow" aria-hidden="true">↗</span></button>
           <div class="sec-heading"><div><span class="label gold">FOR TEAMS & ENTERPRISES</span><h2>让企业的每一份心意，<br>都更有文化分量</h2></div></div>
           <div class="corporate-promo">
             <div class="promo-flower" aria-hidden="true">艾</div>
@@ -190,6 +192,56 @@
           <p class="footer-note">合作项目均为概念规划 · 暂无真实机构认证、公益统计或商业案例</p>
         </section>
 
+        <!-- 07: Sponsored brand sampling — public marketing UI only, no orders or payment -->
+        <section class="screen trial-screen" data-page="trial" tabindex="-1" aria-label="艾礼试用所">
+          <div class="trial-hero">
+            <div class="trial-hero-overlay" aria-hidden="true"><span>礼</span></div>
+            <span class="trial-eyebrow">LINGNAN · BRAND TRIAL STUDIO</span>
+            <div class="trial-hero-inner"><span class="trial-diamond">✦ 品牌试用计划</span><h2>遇见好物，<br>先从一份小样开始。</h2><p>试一试，再决定喜不喜欢。<br>我们邀请品牌提供小样，把选择交还给你。</p><div class="trial-hero-note"><strong>样品 ¥0</strong><i></i><span>配送费用由申领人承担</span></div></div>
+          </div>
+          <div class="trial-intro">
+            <div class="trial-intro-heading"><span class="label gold">CURATED FOR YOU</span><h3>今日试礼</h3></div>
+            <p>这里展示的是<strong>广告主赞助活动</strong>，与岭南红艾自营礼盒分开展示。样品不收费，配送费用在申领前单独说明。</p>
+          </div>
+          <div class="trial-card-list">
+            <article class="trial-card" data-trial-id="scent">
+              <div class="trial-art trial-art-scent" aria-hidden="true">
+                <div class="trial-art-glow"></div><div class="trial-product-bottle"><span>香</span></div><span class="trial-art-leaf">✳</span>
+                <span class="trial-art-caption">SCENT DISCOVERY / SAMPLE</span>
+              </div>
+              <div class="trial-card-body">
+                <div class="trial-card-top"><span class="trial-sponsored">广告 · 示例品牌 A</span><span class="trial-mini-label">体验装</span></div>
+                <h3>岭南草木香氛 · 试香小样</h3>
+                <p>从一缕清新的植物气息开始，找到喜欢的生活香调。</p>
+                <div class="trial-price-row"><strong>样品 ¥0</strong><span>示意运费 <b>¥8</b></span></div>
+                <button class="trial-claim" data-action="sample-detail" data-trial-id="scent">查看试用与配送说明 <span aria-hidden="true">↗</span></button>
+              </div>
+            </article>
+            <article class="trial-card" data-trial-id="cream">
+              <div class="trial-art trial-art-cream" aria-hidden="true">
+                <div class="trial-art-glow"></div><div class="trial-product-tube"><span>本草<br>HAND CARE</span></div><span class="trial-art-leaf">❋</span>
+                <span class="trial-art-caption">DAILY CARE / SAMPLE</span>
+              </div>
+              <div class="trial-card-body">
+                <div class="trial-card-top"><span class="trial-sponsored">广告 · 示例品牌 B</span><span class="trial-mini-label">随身装</span></div>
+                <h3>草本润手霜 · 便携体验装</h3>
+                <p>送给忙碌日常的一点温柔，随身体验轻盈肤感。</p>
+                <div class="trial-price-row"><strong>样品 ¥0</strong><span>示意运费 <b>¥6</b></span></div>
+                <button class="trial-claim" data-action="sample-detail" data-trial-id="cream">查看试用与配送说明 <span aria-hidden="true">↗</span></button>
+              </div>
+            </article>
+          </div>
+          <div class="trial-steps">
+            <div class="trial-intro-heading"><span class="label gold">HOW IT WORKS</span><h3>免费试用，明明白白</h3></div>
+            <div class="trial-step"><span>01</span><div><strong>挑选喜欢的小样</strong><p>每件试用品均标注赞助信息与活动说明。</p></div></div>
+            <div class="trial-step"><span>02</span><div><strong>确认配送费用</strong><p>样品本身免费。运费应在正式申领前透明列明。</p></div></div>
+            <div class="trial-step"><span>03</span><div><strong>申领后查看进度</strong><p>正式版本需接入发货、订单与售后；当前仅演示界面。</p></div></div>
+          </div>
+          <button class="trial-record-entry" data-action="sample-records"><span><strong>我的试用记录</strong><small>查看申请与配送进度（演示空状态）</small></span><span aria-hidden="true">›</span></button>
+          <div class="trial-business-notice"><span class="label gold">FOR BRANDS</span><h3>让好产品，遇见愿意体验的人。</h3><p>开放品牌试用活动展示与合作咨询，广告投放及样品由合作品牌提供。</p><button data-action="sample-sponsor" class="text-link">了解品牌合作方式 →</button></div>
+          <p class="footer-note">广告活动与产品均为设计占位案例，不代表实际招商合作。<br>页面不收款、不采集地址、不创建试用订单。</p>
+        </section>
+
         <!-- 06: Member center — local-only demo identity, no authentication server -->
         <section class="screen account-screen" data-page="account" tabindex="-1" aria-label="我的红艾">
           <div class="account-hero">
@@ -213,6 +265,11 @@
             <button class="account-action" data-action="show-favorites"><span class="action-icon">♡</span><span class="action-copy"><strong>我的收藏</strong><small>留住喜欢的礼物和草木心意</small></span><span aria-hidden="true">›</span></button>
             <button class="account-action" data-action="show-orders"><span class="action-icon">▤</span><span class="action-copy"><strong>礼赠订单</strong><small>演示空状态，不会生成真实订单</small></span><span aria-hidden="true">›</span></button>
           </div>
+          <div class="account-section-title"><span class="label gold">BRAND TRIAL STUDIO</span><h3>我的试用</h3></div>
+          <div class="account-actions">
+            <button class="account-action" data-action="sample-records"><span class="action-icon">✧</span><span class="action-copy"><strong>试用申领记录</strong><small>赞助品牌的小样领取、配送与体验记录</small></span><span aria-hidden="true">›</span></button>
+            <button class="account-action" data-go="trial"><span class="action-icon">礼</span><span class="action-copy"><strong>探索艾礼试用所</strong><small>样品免费，配送费用自理</small></span><span aria-hidden="true">›</span></button>
+          </div>
           <div class="account-section-title"><span class="label gold">YOUR PERSONAL CORNER</span><h3>个人资料</h3></div>
           <div class="account-actions">
             <button class="account-action" data-action="edit-profile"><span class="action-icon">✎</span><span class="action-copy"><strong>昵称与称呼</strong><small>设置仅在此设备可见的演示昵称</small></span><span aria-hidden="true">›</span></button>
@@ -230,7 +287,7 @@
       </div>
       <nav class="tabbar five-tabs" aria-label="原型底部导航">
         <button class="tab active" data-go="home" aria-current="page"><b>⌂</b>首页</button>
-        <button class="tab" data-go="culture"><b>☷</b>红艾文化</button>
+        <button class="tab" data-go="trial"><b>✧</b>试用所</button>
         <button class="tab" data-go="shop"><b>♙</b>礼遇甄选</button>
         <button class="tab" data-go="bespoke"><b>▤</b>企业定制</button>
         <button class="tab" data-go="account"><b>◉</b>我的</button>
