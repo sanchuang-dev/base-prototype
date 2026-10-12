@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#234e41">
-<meta name="description" content="岭南红艾文化传承、非遗文创礼盒、企业定制与公益共建的交互展示原型。">
+<meta name="description" content="岭南红艾文化礼赠品牌交互原型：商务珍藏、节令安康、企业定制及演示用户中心。">
 <title>岭南红艾 · 品牌交互原型</title>
 <link rel="stylesheet" href="./app.css">
 <script src="./app.js" defer></script>
@@ -21,7 +21,8 @@
       <button class="chapter" data-go="culture"><span>02 / 红艾文化</span><small>岭南本草与非遗传承 ↗</small></button>
       <button class="chapter" data-go="shop"><span>03 / 礼遇甄选</span><small>选品、心愿清单、溯源 ↗</small></button>
       <button class="chapter" data-go="bespoke"><span>04 / 企业礼赠</span><small>智能选配与预算预案 ↗</small></button>
-      <button class="chapter" data-go="partners"><span>05 / 品牌共建</span><small>渠道演示与公益共建 ↗</small></button>
+      <button class="chapter" data-go="partners"><span>05 / 品牌共建</span><small>文化与品牌合作 ↗</small></button>
+      <button class="chapter" data-go="account"><span>06 / 我的红艾</span><small>演示身份、礼单与收藏 ↗</small></button>
     </div>
     <div class="row gap"><button class="btn" data-action="share">分享这份原型 ↗</button><button class="btn ghost" data-action="reset">重置演示</button></div>
     <div class="showcase-footer" style="margin-top:26px"><strong>当前章节：</strong><span id="desktop-current">首页</span><br>可点击手机界面的底部菜单、礼盒按钮、报价选项及合作入口。<br>视觉与数字为提案样例，不代表实际交易、认证或商业业绩。</div>
@@ -31,7 +32,7 @@
       <div class="demo-ribbon">PROTOTYPE</div>
       <header class="appbar">
         <div class="app-brand"><span class="seal" style="width:27px;height:27px;font-size:15px;border-width:1px">艾</span><span><strong>岭南红艾</strong><small>HERBAL HERITAGE</small></span></div>
-        <div class="appbar-right"><span class="pill" style="font-size:9px">交互演示版</span><button class="round" data-action="cart" aria-label="打开心愿清单">⌑<span class="small" data-cart-count>0</span></button><span class="avatar" title="演示用户">艾</span></div>
+        <div class="appbar-right"><span class="pill" style="font-size:9px">交互演示版</span><button class="round" data-action="cart" aria-label="打开心愿清单">⌑<span class="small" data-cart-count>0</span></button><button class="avatar avatar-button" data-go="account" aria-label="进入我的红艾" id="header-avatar">艾</button></div>
       </header>
       <div class="viewport" id="viewport">
 
@@ -119,15 +120,15 @@
           <div class="shop-seasonal-feature" hidden><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgxB-Jt1USzyIH7dv0GoivWKoCsq_zv-Bpu0McPl-QdNgXpbIuAdisp9D8PEpWchS3RvRT0JHmO5a6LvpAeO2L6e5w3Whtw0VtLKIzsmpcN6cd7aHljO6itnOre3CgzM9AYatXDdpqkSKY4QSfKI75L9plnd15vrkbn10__QPFJKpI4uN4sKTowy_ZiJ7i9Lq2DjPpfUWnRPS5iTJNDlE320ra3KHArC-SDAnJVXo-11svG2anVieDCA" alt="节令安康系列艾草香囊礼物的概念摄影"><div><span class="label gold">THE SEASONAL COLLECTION</span><h3>以艾为礼，岁岁安康</h3><p>为同事、亲友与节令问候，送出一份温暖得体的岭南心意。</p></div></div>
           <div class="shop-hero">
             <img alt="新中式岭南红艾礼盒陈列" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwrjlLVsoOqQWNXDEaKcqLqcdPjjjrRAbq9HpcPkH_LdQwsImmNlFxuP5Hev1aE7srpZUPqUH0v3idd00wltEiksoHP9kZmDDm5ewXTOijRYMtDbqv3vWN8Cu_CTLHZsm6YNCaxlfWkzElMgxih8f9o74NfFzZogcU5DIM5LcMdwgkw5Fgnsv29KKqv7qtOcGh84fF5Q7MN7DwPuH62VTFogeMQxisQQfrwWrnZlFUQsaiP-YzsI4_9A">
-            <div class="details"><span class="pill red-pill">商务珍藏系列 · 概念商品</span><h2>岭南红艾 · 传家温灸礼盒</h2><p>古法工艺与当代包装设计相遇，以礼盒为载体承载草本故事与节令祝福。</p><div class="row between"><div><strong class="price">¥388</strong> <del class="small muted">¥458</del></div><button class="btn" data-action="add" data-id="classic">加入心愿清单 ＋</button></div></div>
+            <div class="details"><span class="pill red-pill">商务珍藏系列 · 概念商品</span><h2>岭南红艾 · 传家温灸礼盒</h2><p>古法工艺与当代包装设计相遇，以礼盒为载体承载草本故事与节令祝福。</p><div class="row between"><div><strong class="price">¥388</strong> <del class="small muted">¥458</del></div><div class="row gap"><button class="favorite-button" data-action="favorite" data-id="classic" aria-pressed="false" aria-label="收藏传家温灸礼盒">♡</button><button class="btn" data-action="add" data-id="classic">加入心愿清单 ＋</button></div></div></div>
           </div>
           <div class="split mt"><button class="card card-pad" data-go="bespoke" style="text-align:left;color:var(--green)"><strong>▧ 企业采购直通 →</strong><p class="small muted">礼赠定制 · 预算即算</p></button><button class="card card-pad" data-action="share" style="text-align:left;color:var(--red)"><strong>♡ 微信礼品卡构想 →</strong><p class="small muted">分享演示链接</p></button></div>
           <div class="sec-heading"><h2>精选艾礼 · 按心意甄选</h2></div>
           <div class="product-grid">
-            <article class="card product" data-category="incense" data-gift-collection="premium"><img class="pic" loading="lazy" alt="古法红艾香篆礼盒" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQHvCVHLTQB3gkjBdFHNEcsH3tugO-A4iCBEpvnu46LvfYU2FqC3babA34CK1_X2_3FDwysOpCZlRg6QkTSUbX9uh6a1mUB3APaldSofFj_16Oi3xlhrrQqyaeN6TTl5aOf9RGGpxlRck2QUnk5w87-i4IB05KcBnsgdJj-qoP2AseD7il15Chq-2fSBHDGouKO1hWvra8WafN8cOC3f3h4okZVV6zm2o5cYZz_B8IY7gWs4yUQujPaw"><div class="details"><span class="pill">文人香道</span><h3>归元温阳 · 古法香篆礼盒</h3><p>铜炉与香粉，沉静如诗</p><div class="row between"><strong class="price">¥218</strong><button class="add" data-action="add" data-id="scent" aria-label="加入香篆礼盒">＋</button></div></div></article>
-            <article class="card product" data-category="daily" data-gift-collection="seasonal"><img class="pic" loading="lazy" alt="草木护颈带" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2X7er8zzMNo0qeXF_MXRbbgdowUHp-chHLRbfrlidiqbxMveaqCe0G6xFcArvTh4UFPEGDWIzO9GGxAgfWdf0XKy3b1I0zIzLkrEHUil3G5XINS_4Gcyl4OFUIeCvVsq0T_8YptcUF2UbzX7ONWIlcOecRwDyEydEa2zd7hRSblE6FCsc0y3STckBg-4o6dl0AtvIiUxePNN7pZRp2-Nj1pfF9k7NcCIB7zVwnUuh6vjpYDni4Jizvg"><div class="details"><span class="pill">草木植物染</span><h3>岁岁安康 · 草木护颈带</h3><p>自然肌理，日常相伴</p><div class="row between"><strong class="price">¥158</strong><button class="add" data-action="add" data-id="neck" aria-label="加入护颈带">＋</button></div></div></article>
-            <article class="card product" data-category="season" data-gift-collection="seasonal"><img class="pic" loading="lazy" alt="非遗刺绣香囊" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgxB-Jt1USzyIH7dv0GoivWKoCsq_zv-Bpu0McPl-QdNgXpbIuAdisp9D8PEpWchS3RvRT0JHmO5a6LvpAeO2L6e5w3Whtw0VtLKIzsmpcN6cd7aHljO6itnOre3CgzM9AYatXDdpqkSKY4QSfKI75L9plnd15vrkbn10__QPFJKpI4uN4sKTowy_ZiJ7i9Lq2DjPpfUWnRPS5iTJNDlE320ra3KHArC-SDAnJVXo-11svG2anVieDCA"><div class="details"><span class="pill red-pill">端阳雅物</span><h3>端阳福艾 · 刺绣香囊</h3><p>节令绣艺，随身祝愿</p><div class="row between"><strong class="price">¥99</strong><button class="add" data-action="add" data-id="sachet" aria-label="加入香囊">＋</button></div></div></article>
-            <article class="card product" data-category="daily" data-gift-collection="premium"><img class="pic" loading="lazy" alt="红艾陈艾条" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8PLgfMKzM6iiZBK_1JVvRlkMJ-jQI3nlcMLBmZA3C0NkcCv603LaD1zqGQtRrQ1r-3lTxCC8H72cq5fGntRvkdrTUfqqTa3y_glR5q37xpIu5hNHo0vVUBhqlT8lEC1kI0qMwxSYbU9fGEe28H8LGHRJD8HDQg_AS0xc_IgAXFRhdmqdqJwIBPXUp5ruD7H66zktvYn3FlYCVJjcO27xomugVTeSWBqEZPuAlZ23jC9tSfGU5YJWZuQ"><div class="details"><span class="pill">匠心草本</span><h3>地道纯绒 · 陈艾条</h3><p>传统工序，批次待溯源</p><div class="row between"><strong class="price">¥188</strong><button class="add" data-action="add" data-id="moxa" aria-label="加入陈艾条">＋</button></div></div></article>
+            <article class="card product" data-category="incense" data-gift-collection="premium"><img class="pic" loading="lazy" alt="古法红艾香篆礼盒" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQHvCVHLTQB3gkjBdFHNEcsH3tugO-A4iCBEpvnu46LvfYU2FqC3babA34CK1_X2_3FDwysOpCZlRg6QkTSUbX9uh6a1mUB3APaldSofFj_16Oi3xlhrrQqyaeN6TTl5aOf9RGGpxlRck2QUnk5w87-i4IB05KcBnsgdJj-qoP2AseD7il15Chq-2fSBHDGouKO1hWvra8WafN8cOC3f3h4okZVV6zm2o5cYZz_B8IY7gWs4yUQujPaw"><div class="details"><span class="pill">文人香道</span><h3>归元温阳 · 古法香篆礼盒</h3><p>铜炉与香粉，沉静如诗</p><div class="row between"><strong class="price">¥218</strong><button class="favorite-button" data-action="favorite" data-id="scent" aria-pressed="false" aria-label="收藏古法香篆礼盒">♡</button><button class="add" data-action="add" data-id="scent" aria-label="加入香篆礼盒">＋</button></div></div></article>
+            <article class="card product" data-category="daily" data-gift-collection="seasonal"><img class="pic" loading="lazy" alt="草木护颈带" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2X7er8zzMNo0qeXF_MXRbbgdowUHp-chHLRbfrlidiqbxMveaqCe0G6xFcArvTh4UFPEGDWIzO9GGxAgfWdf0XKy3b1I0zIzLkrEHUil3G5XINS_4Gcyl4OFUIeCvVsq0T_8YptcUF2UbzX7ONWIlcOecRwDyEydEa2zd7hRSblE6FCsc0y3STckBg-4o6dl0AtvIiUxePNN7pZRp2-Nj1pfF9k7NcCIB7zVwnUuh6vjpYDni4Jizvg"><div class="details"><span class="pill">草木植物染</span><h3>岁岁安康 · 草木护颈带</h3><p>自然肌理，日常相伴</p><div class="row between"><strong class="price">¥158</strong><button class="favorite-button" data-action="favorite" data-id="neck" aria-pressed="false" aria-label="收藏草木护颈带">♡</button><button class="add" data-action="add" data-id="neck" aria-label="加入护颈带">＋</button></div></div></article>
+            <article class="card product" data-category="season" data-gift-collection="seasonal"><img class="pic" loading="lazy" alt="非遗刺绣香囊" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgxB-Jt1USzyIH7dv0GoivWKoCsq_zv-Bpu0McPl-QdNgXpbIuAdisp9D8PEpWchS3RvRT0JHmO5a6LvpAeO2L6e5w3Whtw0VtLKIzsmpcN6cd7aHljO6itnOre3CgzM9AYatXDdpqkSKY4QSfKI75L9plnd15vrkbn10__QPFJKpI4uN4sKTowy_ZiJ7i9Lq2DjPpfUWnRPS5iTJNDlE320ra3KHArC-SDAnJVXo-11svG2anVieDCA"><div class="details"><span class="pill red-pill">端阳雅物</span><h3>端阳福艾 · 刺绣香囊</h3><p>节令绣艺，随身祝愿</p><div class="row between"><strong class="price">¥99</strong><button class="favorite-button" data-action="favorite" data-id="sachet" aria-pressed="false" aria-label="收藏端阳刺绣香囊">♡</button><button class="add" data-action="add" data-id="sachet" aria-label="加入香囊">＋</button></div></div></article>
+            <article class="card product" data-category="daily" data-gift-collection="premium"><img class="pic" loading="lazy" alt="红艾陈艾条" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8PLgfMKzM6iiZBK_1JVvRlkMJ-jQI3nlcMLBmZA3C0NkcCv603LaD1zqGQtRrQ1r-3lTxCC8H72cq5fGntRvkdrTUfqqTa3y_glR5q37xpIu5hNHo0vVUBhqlT8lEC1kI0qMwxSYbU9fGEe28H8LGHRJD8HDQg_AS0xc_IgAXFRhdmqdqJwIBPXUp5ruD7H66zktvYn3FlYCVJjcO27xomugVTeSWBqEZPuAlZ23jC9tSfGU5YJWZuQ"><div class="details"><span class="pill">匠心草本</span><h3>地道纯绒 · 陈艾条</h3><p>传统工序，批次待溯源</p><div class="row between"><strong class="price">¥188</strong><button class="favorite-button" data-action="favorite" data-id="moxa" aria-pressed="false" aria-label="收藏陈艾条">♡</button><button class="add" data-action="add" data-id="moxa" aria-label="加入陈艾条">＋</button></div></div></article>
           </div>
           <div class="sec-heading"><h2>一盒一码 · 溯源体验</h2></div>
           <div class="card card-pad"><p class="story-body">真实版本可输入防伪码查询生产批次与来源。这里先演示流程，不会返回虚构的认证结果。</p><div class="field"><label for="verify-code">包装防伪码</label><input id="verify-code" maxlength="32" placeholder="输入任意演示编码（如 LNHA2026）"></div><button class="btn full" data-action="verify">模拟溯源查询 →</button></div>
@@ -189,12 +190,50 @@
           <p class="footer-note">合作项目均为概念规划 · 暂无真实机构认证、公益统计或商业案例</p>
         </section>
 
+        <!-- 06: Member center — local-only demo identity, no authentication server -->
+        <section class="screen account-screen" data-page="account" tabindex="-1" aria-label="我的红艾">
+          <div class="account-hero">
+            <div class="account-hero-art" aria-hidden="true">艾</div>
+            <span class="account-overline">MY LINGNAN · 一份心意，一方天地</span>
+            <div class="account-identity">
+              <div class="account-avatar" id="member-avatar" aria-hidden="true">艾</div>
+              <div class="account-who"><h2 id="member-name">岭南访客</h2><p id="member-state">未进入演示身份</p></div>
+            </div>
+            <button class="account-hero-button" id="member-cta" data-action="demo-login">进入演示会员身份 <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="account-disclaimer">演示用户中心 · 无真实注册、验证码、服务端账号或支付。仅保存非敏感的本地体验数据，请不要填写真实个人信息。</p>
+          <div class="account-stats" aria-label="我的礼遇概览">
+            <button data-action="cart"><b id="account-wish-count">0</b><span>礼盒心愿单</span></button>
+            <button data-action="show-favorites"><b id="account-fav-count">0</b><span>心动收藏</span></button>
+            <button data-action="show-orders"><b>0</b><span>礼赠订单</span></button>
+          </div>
+          <div class="account-section-title"><span class="label gold">MY GIFT JOURNEY</span><h3>我的礼遇</h3></div>
+          <div class="account-actions">
+            <button class="account-action" data-action="cart"><span class="action-icon">◇</span><span class="action-copy"><strong>礼盒心愿单</strong><small>挑选想赠予的艾礼，随时继续浏览</small></span><span aria-hidden="true">›</span></button>
+            <button class="account-action" data-action="show-favorites"><span class="action-icon">♡</span><span class="action-copy"><strong>我的收藏</strong><small>留住喜欢的礼物和草木心意</small></span><span aria-hidden="true">›</span></button>
+            <button class="account-action" data-action="show-orders"><span class="action-icon">▤</span><span class="action-copy"><strong>礼赠订单</strong><small>演示空状态，不会生成真实订单</small></span><span aria-hidden="true">›</span></button>
+          </div>
+          <div class="account-section-title"><span class="label gold">YOUR PERSONAL CORNER</span><h3>个人资料</h3></div>
+          <div class="account-actions">
+            <button class="account-action" data-action="edit-profile"><span class="action-icon">✎</span><span class="action-copy"><strong>昵称与称呼</strong><small>设置仅在此设备可见的演示昵称</small></span><span aria-hidden="true">›</span></button>
+            <button class="account-action" data-action="demo-region"><span class="action-icon">⌁</span><span class="action-copy"><strong>礼赠城市偏好</strong><small id="member-region">尚未选择 · 不采集真实收货地址</small></span><span aria-hidden="true">›</span></button>
+            <button class="account-action" data-action="demo-settings"><span class="action-icon">⚙</span><span class="action-copy"><strong>演示设置</strong><small>查看数据存储说明、退出与清空</small></span><span aria-hidden="true">›</span></button>
+          </div>
+          <div class="account-invite">
+            <span class="label gold">A GIFT OF GOOD WISHES</span>
+            <h3>礼有心意，赠有回响。</h3><p>从今日的一份珍藏，到节令的一声问候。下一份岭南红艾礼，送给谁？</p>
+            <button class="account-explore" data-go="shop">继续鉴赏艾礼 →</button>
+          </div>
+          <p class="footer-note">我的红艾 · 轻量演示用户模块<br>无需真实姓名、手机号、密码与住址</p>
+        </section>
+
       </div>
-      <nav class="tabbar four-tabs" aria-label="原型底部导航">
+      <nav class="tabbar five-tabs" aria-label="原型底部导航">
         <button class="tab active" data-go="home" aria-current="page"><b>⌂</b>首页</button>
         <button class="tab" data-go="culture"><b>☷</b>红艾文化</button>
         <button class="tab" data-go="shop"><b>♙</b>礼遇甄选</button>
         <button class="tab" data-go="bespoke"><b>▤</b>企业定制</button>
+        <button class="tab" data-go="account"><b>◉</b>我的</button>
       </nav>   </div>
   </main>
 </div>
