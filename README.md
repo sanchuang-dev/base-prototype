@@ -19,8 +19,10 @@
 
 - 这是可体验的静态原型，所有数据只在当前页面内模拟，不写真实后台，也不伪造真实支付或验真结果。
 - 所有功能新增都只维护本分支。保留 `main` 的现有社区产品及 Pages 发布流程，避免两条产品线交叉。
-- 正式部署到独立域名之前，另作发布设计，不复用 `main` 的 Pages 入口。
+- 使用独立的发布仓库 `sanchuang-dev/lingnan-red-mugwort-pages` 托管此原型，不复用或修改 `main` 的 Pages 入口。
 
-## 快速网页预览（第三方）
+## GitHub Pages 正式原型预览
 
-可尝试 https://raw.githack.com/sanchuang-dev/base-prototype/feat/lingnan-red-mugwort-prototype/index.html （第三方开发预览代理，首次打开可能有安全确认页，并非项目自己的正式域名或发布服务）。
+- 预览地址：https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/
+- 只读发布仓库：https://github.com/sanchuang-dev/lingnan-red-mugwort-pages
+- 本分支是唯一产品源码；发布仓库定时读取本分支，支持手动即时发布，不存第二份业务代码。
