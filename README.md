@@ -18,6 +18,23 @@
 - **这只是商务展示入口，不是访问控制。** 页面、对应演示与仓库仍然公开，不能用于保密客户资料或敏感提案。
 - 当前未设置真实客户名称或合作身份，避免将尚未确认的客户关系写进公共页面。以后要个性化客户信息需另行取得确认。
 
+## 国内客户入口：lab.3cgroup.cn（待绑定）
+
+**目标域名已经选定，但尚未声称完成 DNS 或 EdgeOne 部署。** 保留现有 GitHub Pages 公开链接作为备用入口。
+
+采用腾讯 EdgeOne Makers 的单项目静态托管，项目名固定为 `sanchuang-lab`。项目应在控制台选中国大陆可用区或含中国大陆的全球可用区（须确认 `3cgroup.cn` 备案在平台可用），**不要通过 GitHub 导入仓库重复构建**。
+
+只需一次初始化：
+
+1. 登录 [EdgeOne Makers](https://pages.edgeone.ai/)，创建名为 `sanchuang-lab` 的静态项目，选择适合已备案域名的加速区域。
+2. 在 Makers 控制台创建 API Token，并在本仓库 Settings → Secrets and variables → Actions 中设置 `EDGEONE_API_TOKEN`（只存 GitHub Secret，绝不提交源码）。
+3. 在 Makers 项目「域名管理」添加 `lab.3cgroup.cn`，按平台生成的验证记录与 **CNAME 目标** 配置 DNS，确认 HTTPS 证书和生产环境绑定。**不要自行猜测或预填 CNAME 值。**
+4. 重新运行 `main` 的「Publish Sanchuang demo directory to GitHub Pages」工作流即可把同一份静态产物发布至 EdgeOne。
+
+工作流只有在 Token 存在时才尝试 EdgeOne 部署；没有 Token 会明确记录未配置，不影响原 GitHub Pages 的构建、部署或回归检查。EdgeOne 与 GitHub Pages 使用的是同一份 `_site` 产物，根入口及 `/local-life/`、`/lingnan/`、`/proposal/...` 路径一致。
+
+接入完成前不要把 `https://lab.3cgroup.cn/` 当作线上已可用链接。部署成功和域名 HTTP 可访问需要分别验证。
+
 ## 协作与发布
 
 - [地方基本法 `main/AGENTS.md`](./AGENTS.md)，上位规则为 [三创组织宪法](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md)。
