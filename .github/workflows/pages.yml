@@ -1,4 +1,4 @@
-name: Deploy prototype to GitHub Pages
+name: Publish Sanchuang demo directory to GitHub Pages
 
 on:
   push:
@@ -28,127 +28,17 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Rebuild V0.3.1 release
+      - name: Build independent local-life demo
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p _site
-          cat release/v0.3.1/index.html.gz.b64.part.* \
-            | base64 --decode \
-            | gzip --decompress \
-            > _site/index.html
-          echo "fa171baa73d582134818884289cf7dfbfec7d4d5c48a4e47d849eeeda84a76a8  _site/index.html" \
-            | sha256sum --check -
+          python3 scripts/build_local_life.py
 
-      - name: Apply V0.3.3 demo routing fixes
+      - name: Render public demo directory
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          import re, base64
-
-          path = Path("_site/index.html")
-          html = path.read_text()
-
-          html = html.replace(
-              'home:      { title: "社区家庭健康", sub: "示例街道 · 幸福里社区", tab: "home" },',
-              'home:      { title: "本地生活服务", sub: "示例街道 · 幸福里社区", tab: "home" },',
-              1,
-          )
-          html = html.replace(
-              'document.title = cfg.title + " · 社区家庭健康服务平台";',
-              'document.title = cfg.title + " · 幸福里社区";',
-              1,
-          )
-
-          route_replacements = {
-              'broadcast: { title: "社区广播", back: true, tab: "community" },':
-                  'broadcast: { title: "社区广播", back: true, tab: "community", parent: "community" },',
-              'activity:  { title: "活动详情", back: true, tab: "community" },':
-                  'activity:  { title: "活动详情", back: true, tab: "community", parent: "community" },',
-              'culture:   { title: "党群文化中心", back: true, tab: "community" },':
-                  'culture:   { title: "党群文化中心", back: true, tab: "community", parent: "community" },',
-              'ai:        { title: "社区助手", back: true, tab: "health" },':
-                  'ai:        { title: "社区助手", back: true, tab: "health", parent: "health" },',
-              'device:    { title: "魔镜 · 健康终端", back: true, tab: "health" },':
-                  'device:    { title: "魔镜 · 健康终端", back: true, tab: "health", parent: "health" },',
-              'lecture:   { title: "健康讲堂", back: true, tab: "health" },':
-                  'lecture:   { title: "健康讲堂", back: true, tab: "health", parent: "health" },',
-              'product:   { title: "商品详情", back: true, tab: "life" },':
-                  'product:   { title: "商品详情", back: true, tab: "life", parent: "life" },',
-              'exchange:  { title: "积分兑换", back: true, tab: "life" },':
-                  'exchange:  { title: "积分兑换", back: true, tab: "life", parent: "life" },',
-              'points:    { title: "我的积分", back: true, tab: "me" },':
-                  'points:    { title: "我的积分", back: true, tab: "me", parent: "me" },',
-              'gd:        { title: "广电服务", back: true, tab: "me" },':
-                  'gd:        { title: "广电服务", back: true, tab: "home", parent: "home" },',
-              'mydevices: { title: "我的设备", back: true, tab: "me" },':
-                  'mydevices: { title: "我的设备", back: true, tab: "me", parent: "me" },',
-          }
-          for old, new in route_replacements.items():
-              if old not in html:
-                  raise SystemExit("route source not found: " + old)
-              html = html.replace(old, new, 1)
-
-          if 'backBtn.dataset.parent = cfg.tab;' not in html:
-              raise SystemExit("back parent source not found")
-          html = html.replace(
-              'backBtn.dataset.parent = cfg.tab;',
-              'backBtn.dataset.parent = cfg.parent || cfg.tab || "home";',
-              1,
-          )
-
-          current_re = re.compile(
-              r'(\s*function currentName\(\) \{\s*var raw = .*?\s*return .*?;\s*\})'
-              r'(\s*function render\(\) \{)',
-              re.S,
-          )
-          m = current_re.search(html)
-          if not m:
-              raise SystemExit("currentName function not found")
-
-          history_code = base64.b64decode("CiAgICAgIHZhciBpbml0aWFsUm91dGUgPSBjdXJyZW50TmFtZSgpOwogICAgICB2YXIgaW5pdGlhbFN0YXRlID0gaGlzdG9yeS5zdGF0ZTsKICAgICAgaWYgKCFpbml0aWFsU3RhdGUgfHwgaW5pdGlhbFN0YXRlLm1pbmlhcHAgIT09IHRydWUpIHsKICAgICAgICBoaXN0b3J5LnJlcGxhY2VTdGF0ZSh7IG1pbmlhcHA6IHRydWUsIHJvdXRlOiBpbml0aWFsUm91dGUsIGluZGV4OiAwIH0sICIiLCAiIy8iICsgaW5pdGlhbFJvdXRlKTsKICAgICAgfQoKICAgICAgZnVuY3Rpb24gbmF2aWdhdGUocm91dGUsIHJlcGxhY2UpIHsKICAgICAgICBpZiAoIU9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChST1VURVMsIHJvdXRlKSkgeyByb3V0ZSA9ICJob21lIjsgfQogICAgICAgIGlmIChyb3V0ZSA9PT0gY3VycmVudE5hbWUoKSkgeyByZW5kZXIoKTsgcmV0dXJuOyB9CgogICAgICAgIHZhciBjdXJyZW50SW5kZXggPSBoaXN0b3J5LnN0YXRlICYmIGhpc3Rvcnkuc3RhdGUubWluaWFwcCA9PT0gdHJ1ZQogICAgICAgICAgPyBOdW1iZXIoaGlzdG9yeS5zdGF0ZS5pbmRleCB8fCAwKQogICAgICAgICAgOiAwOwogICAgICAgIHZhciBuZXh0U3RhdGUgPSB7CiAgICAgICAgICBtaW5pYXBwOiB0cnVlLAogICAgICAgICAgcm91dGU6IHJvdXRlLAogICAgICAgICAgaW5kZXg6IHJlcGxhY2UgPyBjdXJyZW50SW5kZXggOiBjdXJyZW50SW5kZXggKyAxCiAgICAgICAgfTsKCiAgICAgICAgaWYgKHJlcGxhY2UpIHsKICAgICAgICAgIGhpc3RvcnkucmVwbGFjZVN0YXRlKG5leHRTdGF0ZSwgIiIsICIjLyIgKyByb3V0ZSk7CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgIGhpc3RvcnkucHVzaFN0YXRlKG5leHRTdGF0ZSwgIiIsICIjLyIgKyByb3V0ZSk7CiAgICAgICAgfQogICAgICAgIHJlbmRlcigpOwogICAgICB9Cg==").decode()
-          html = html[:m.start()] + m.group(1) + history_code + m.group(2) + html[m.end():]
-
-          back_re = re.compile(
-              r'\s*backBtn\.addEventListener\("click", function \(\) \{.*?\}\);\s*'
-              r'window\.addEventListener\("hashchange", render\);',
-              re.S,
-          )
-          if not back_re.search(html):
-              raise SystemExit("old back handler not found")
-
-          new_back = base64.b64decode("CiAgICAgIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgZnVuY3Rpb24gKGUpIHsKICAgICAgICB2YXIgbGluayA9IGUudGFyZ2V0LmNsb3Nlc3QoJ2FbaHJlZl49IiMvIl0nKTsKICAgICAgICBpZiAoIWxpbmspIHsgcmV0dXJuOyB9CiAgICAgICAgdmFyIHRhcmdldCA9IChsaW5rLmdldEF0dHJpYnV0ZSgiaHJlZiIpIHx8ICIiKS5yZXBsYWNlKC9eI1wvPy8sICIiKS5zcGxpdCgiPyIpWzBdOwogICAgICAgIGlmICghT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsKFJPVVRFUywgdGFyZ2V0KSkgeyByZXR1cm47IH0KICAgICAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgbmF2aWdhdGUodGFyZ2V0LCBmYWxzZSk7CiAgICAgIH0pOwoKICAgICAgYmFja0J0bi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uICgpIHsKICAgICAgICB2YXIgc3RhdGUgPSBoaXN0b3J5LnN0YXRlOwogICAgICAgIGlmIChzdGF0ZSAmJiBzdGF0ZS5taW5pYXBwID09PSB0cnVlICYmIE51bWJlcihzdGF0ZS5pbmRleCB8fCAwKSA+IDApIHsKICAgICAgICAgIGhpc3RvcnkuYmFjaygpOwogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICBuYXZpZ2F0ZShiYWNrQnRuLmRhdGFzZXQucGFyZW50IHx8ICJob21lIiwgdHJ1ZSk7CiAgICAgIH0pOwoKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoInBvcHN0YXRlIiwgcmVuZGVyKTsKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImhhc2hjaGFuZ2UiLCBmdW5jdGlvbiAoKSB7CiAgICAgICAgaWYgKCFoaXN0b3J5LnN0YXRlIHx8IGhpc3Rvcnkuc3RhdGUubWluaWFwcCAhPT0gdHJ1ZSkgewogICAgICAgICAgdmFyIHJvdXRlID0gY3VycmVudE5hbWUoKTsKICAgICAgICAgIGhpc3RvcnkucmVwbGFjZVN0YXRlKHsgbWluaWFwcDogdHJ1ZSwgcm91dGU6IHJvdXRlLCBpbmRleDogMCB9LCAiIiwgIiMvIiArIHJvdXRlKTsKICAgICAgICB9CiAgICAgICAgcmVuZGVyKCk7CiAgICAgIH0pOwo=").decode()
-          html = back_re.sub(new_back, html, count=1)
-
-          route_src = html[html.index("var ROUTES = {"):html.index("};", html.index("var ROUTES = {")) + 2]
-          routes = set(re.findall(r'^\s*(\w+):\s*\{', route_src, re.M))
-          screens = set(re.findall(r'data-screen="([^"]+)"', html))
-          href_routes = set(re.findall(r'href="#/([^"?]+)', html))
-
-          if screens - routes:
-              raise SystemExit("screens without routes: " + repr(sorted(screens - routes)))
-          if routes - screens:
-              raise SystemExit("routes without screens: " + repr(sorted(routes - screens)))
-          if href_routes - routes:
-              raise SystemExit("broken internal href routes: " + repr(sorted(href_routes - routes)))
-
-          required = [
-              'title: "本地生活服务"',
-              'gd:        { title: "广电服务", back: true, tab: "home", parent: "home" }',
-              'history.back();',
-              'window.addEventListener("popstate", render);',
-          ]
-          for token in required:
-              if token not in html:
-                  raise SystemExit("demo routing assertion missing: " + token)
-
-          path.write_text(html)
-          PY
-
-          sha256sum _site/index.html
-          touch _site/.nojekyll
+          python3 scripts/render_portal.py
 
       - name: Stage independent customer demos
         shell: bash
@@ -196,11 +86,15 @@ jobs:
             echo "HTTP OK: $base/$path"
           }
 
-          fetch "" community.html
+          fetch "" portal.html
+          fetch "local-life/" community.html
           fetch "lingnan/" lingnan.html
           fetch "lingnan/app.css" lingnan.css
           fetch "lingnan/app.js" lingnan.js
 
+          grep -q '三创 · 演示中心' "$tmp/portal.html"
+          grep -q 'href="./local-life/"' "$tmp/portal.html"
+          grep -q 'href="./lingnan/"' "$tmp/portal.html"
           grep -q '本地生活服务' "$tmp/community.html"
           grep -q '岭南红艾' "$tmp/lingnan.html"
           grep -q 'data-page="home"' "$tmp/lingnan.html"

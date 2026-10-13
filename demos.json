@@ -2,6 +2,22 @@
   "schema_version": 1,
   "demos": [
     {
+      "id": "local-life",
+      "branch": "demo/local-life",
+      "publish_path": "local-life",
+      "builder": "legacy-community",
+      "expected_sha256": "cec419b9cd2cc22ef59a9ae5c035753566cb1ec8cfdb6246f16d149dddf0976d",
+      "title": "社区本地生活",
+      "category": "COMMUNITY · LOCAL LIFE",
+      "summary": "把社区消息、广电服务、家庭健康与居民权益放进同一处入口。",
+      "features": [
+        "社区服务",
+        "家庭健康",
+        "积分礼遇"
+      ],
+      "theme": "local"
+    },
+    {
       "id": "lingnan",
       "branch": "feat/lingnan-red-mugwort-prototype",
       "publish_path": "lingnan",
@@ -10,7 +26,16 @@
         "index.html",
         "app.css",
         "app.js"
-      ]
+      ],
+      "title": "岭南红艾",
+      "category": "CULTURE · BRAND EXPERIENCE",
+      "summary": "从岭南草木文化出发，体验品牌礼赠、企业定制与礼遇探索。",
+      "features": [
+        "草木文化",
+        "品牌礼赠",
+        "企业定制"
+      ],
+      "theme": "botanical"
     }
   ]
 }

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f6f1">
+  <meta name="description" content="三创客户演示中心｜精选数字产品概念与交互体验，独立原型，统一展示。">
+  <title>三创 · 客户演示中心</title>
+  <style>
+    :root{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:#202521;background:#f7f6f1;font-synthesis:none}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
+    :focus-visible{outline:3px solid #b76d40;outline-offset:5px}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(22px,5vw,72px)}
+    .site-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:30px;padding-bottom:26px;border-bottom:1px solid #ddded5}
+    .identity{display:flex;align-items:center;gap:13px;min-width:0}
+    .mark{position:relative;width:40px;height:40px;border:1.5px solid #2b5248;border-radius:12px;background:#e8ede7;flex:none}
+    .mark:before,.mark:after{content:"";position:absolute;display:block;border:1.5px solid #2b5248;border-radius:5px;transform:rotate(-25deg)}
+    .mark:before{width:14px;height:19px;left:9px;top:7px}.mark:after{width:11px;height:13px;left:17px;top:14px;background:#b3c5b6}
+    .brand{font-weight:760;font-size:17px;letter-spacing:.07em}.subbrand{display:block;margin-top:2px;color:#798079;font-size:10px;letter-spacing:.21em;font-weight:550}
+    .head-right{display:flex;align-items:center;gap:10px;color:#777e76;font-size:12px}
+    .head-dot{width:7px;height:7px;border-radius:50%;background:#568476;box-shadow:0 0 0 5px #e4ede5}
+    .hero{position:relative;padding-top:clamp(60px,8vw,105px);padding-bottom:clamp(48px,7vw,95px);overflow:hidden}
+    .hero:after{content:"";position:absolute;width:330px;height:330px;right:-85px;top:0;border:1px solid #dfe3d9;border-radius:50%;pointer-events:none;box-shadow:0 0 0 65px #f0f1e9,0 0 0 66px #e4e6dc;opacity:.55}
+    .eyebrow{display:flex;align-items:center;gap:14px;color:#526c5f;font-size:11px;font-weight:700;letter-spacing:.22em}
+    .eyebrow:before{content:"";width:33px;height:1px;background:#617d70}
+    h1{margin:25px 0 24px;font-size:clamp(46px,6.9vw,91px);line-height:1.13;letter-spacing:-.05em;font-weight:600;position:relative;z-index:1}
+    h1 em{font-style:normal;color:#476b5e}
+    .hero-intro{margin:0;color:#737970;font-size:clamp(14px,1.65vw,17px);line-height:2;max-width:600px;position:relative;z-index:1}
+    .section-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:23px}
+    .section-top h2{font-size:clamp(22px,3vw,31px);font-weight:650;letter-spacing:-.04em;margin:7px 0 0}
+    .overline{font-size:10px;color:#868d84;font-weight:750;letter-spacing:.18em}
+    .collection-note{font-size:12px;color:#91978e;white-space:nowrap}
+    .demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    .project{position:relative;min-height:446px;border-radius:21px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(26px,3vw,39px);isolation:isolate;transition:transform .25s,box-shadow .25s}
+    .project:hover{transform:translateY(-5px);box-shadow:0 18px 45px #1f292117}
+    .project.local{background:#e4ede9;color:#214a40}
+    .project.botanical{background:#ebe8df;color:#3e4c37}
+    .project-top,.project-content{position:relative;z-index:1}
+    .project-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .project-id{font-size:10px;letter-spacing:.12em;font-weight:750;opacity:.7}
+    .project-type{font-size:11px;border:1px solid currentColor;border-radius:99px;padding:8px 12px;opacity:.7;white-space:nowrap}
+    .art{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+    .local .art:before{content:"";position:absolute;width:350px;height:350px;border:1.7px solid #6a9a8b;border-radius:50%;right:-85px;top:36px;box-shadow:0 0 0 49px #d9e7df,0 0 0 51px #8aafa0,0 0 0 99px #dae8e1;opacity:.67}
+    .local .art:after{content:"";position:absolute;right:104px;top:130px;width:116px;height:148px;border-radius:65px 65px 14px 14px;background:#a9c7b9;transform:rotate(26deg);box-shadow:75px 35px 0 -18px #719c89;opacity:.8}
+    .botanical .art:before{content:"";position:absolute;width:400px;height:400px;right:-120px;top:0;border:1px solid #b4bca5;border-radius:50%;box-shadow:0 0 0 53px #e4e4d9,0 0 0 54px #c1c8b5;opacity:.85}
+    .botanical .art:after{content:"艾";font:230px/.9 "Songti SC","Noto Serif SC",serif;position:absolute;right:33px;top:88px;opacity:.13;transform:rotate(-14deg)}
+    .project-content{margin-top:auto}
+    .category{font-size:10px;letter-spacing:.16em;font-weight:730;opacity:.67}
+    .project h3{font-size:clamp(33px,4.1vw,53px);font-weight:560;letter-spacing:-.045em;margin:15px 0}
+    .project-description{font-size:14px;line-height:1.8;max-width:380px;opacity:.82;margin:0 0 18px}
+    .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:31px}
+    .chip{padding:6px 10px;border:1px solid currentColor;border-radius:6px;font-size:10px;opacity:.64}
+    .open-link{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid currentColor;padding-top:19px;font-size:13px;font-weight:720}
+    .open-link span:last-child{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid currentColor;font-size:19px;transition:transform .2s}
+    .project:hover .open-link span:last-child{transform:translate(3px,-3px)}
+    .meta-strip{display:flex;align-items:flex-start;gap:18px;padding:34px 0 55px;margin-top:34px;border-top:1px solid #dfdfd5}
+    .meta-symbol{width:30px;height:30px;border:1px solid #b6c3b7;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#5c7b69;flex:none}
+    .meta-strip strong{font-size:13px}.meta-strip p{margin:8px 0 0;font-size:12px;color:#858b82;line-height:1.9;max-width:800px}
+    footer{padding:24px 0 38px;border-top:1px solid #dfdfd5;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px;color:#868d84}
+    @media(max-width:720px){.site-head{padding-top:19px;padding-bottom:19px}.hero{padding-top:62px;padding-bottom:58px}.hero:after{width:190px;height:190px;right:-80px;top:65px}.demo-grid{grid-template-columns:1fr;gap:16px}.project{min-height:410px}.section-top{align-items:start}.collection-note{margin-top:8px;white-space:normal;text-align:right}.meta-strip{margin-top:20px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+  <script>
+    // Preserve old bookmarked routes from the former community homepage.
+    if (/^#\/[a-z]/i.test(location.hash)) {
+      location.replace("./local-life/" + location.hash);
+    }
+  </script>
+</head>
+<body>
+  <header class="wrap site-head">
+    <div class="identity"><div class="mark" aria-hidden="true"></div><div><div class="brand">三创 · 演示中心</div><small class="subbrand">SANCHUANG / DEMO SHOWCASE</small></div></div>
+    <div class="head-right"><span class="head-dot" aria-hidden="true"></span><span>交互原型展示</span></div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">IDEAS MADE TANGIBLE</p>
+      <h1>让想法，<br><em>先被看见。</em></h1>
+      <p class="hero-intro">在正式建设之前，先走进产品。<br>这里收录三创正在探索的数字服务、文化品牌与客户交互方案。</p>
+    </section>
+    <section aria-labelledby="collection-title">
+      <div class="section-top"><div><div class="overline">SELECTED EXPERIENCES</div><h2 id="collection-title">探索原型</h2></div><div class="collection-note"><!--DEMO_COUNT--></div></div>
+      <div class="demo-grid">
+        <!--DEMO_CARDS-->
+      </div>
+    </section>
+    <aside class="meta-strip">
+      <span class="meta-symbol" aria-hidden="true">i</span>
+      <div><strong>关于这些演示</strong><p>页面用于展示产品概念、视觉方向和交互流程。示例中的商品、价格、服务、合作与数据不代表已经上线或实际履约；具体内容以正式项目为准。</p></div>
+    </aside>
+  </main>
+  <footer class="wrap"><span>© 三创 · 原型展示</span><span>Prototype experiences · For discussion & demonstration</span></footer>
+</body>
+</html>
