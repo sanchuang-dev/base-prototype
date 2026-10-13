@@ -20,10 +20,11 @@
 
 - 这是可体验的静态原型：不写真实后台，也不伪造真实支付、订单或验真结果。用户中心通过浏览器 `localStorage` 保存**演示昵称、是否体验会员身份、城市偏好、收藏及礼单**；无真实注册、短信验证、密码、手机号、详细地址和云端同步。请勿输入真实个人资料。演示设置可清空本地数据。
 - 所有功能新增都只维护本分支。保留 `main` 的现有社区产品及 Pages 发布流程，避免两条产品线交叉。
-- 使用独立的发布仓库 `sanchuang-dev/lingnan-red-mugwort-pages` 托管此原型，不复用或修改 `main` 的 Pages 入口。
+- 原型产品源码只在本分支；仓库 `main` 统一管理 Pages 发布。此分支不与社区项目合并，发布只读取明确登记的静态文件。
+- `main/demos.json` 是分支到演示子路径的唯一发布映射；对外发布由 `main/.github/workflows/pages.yml` 统一完成。当前可在主分支 Actions 中手动运行发布工作流来同步本分支的改动。
 
-## GitHub Pages 正式原型预览
+## GitHub Pages 原型预览
 
-- 预览地址：https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/
-- 只读发布仓库：https://github.com/sanchuang-dev/lingnan-red-mugwort-pages
-- 本分支是唯一产品源码；发布仓库定时读取本分支，支持手动即时发布，不存第二份业务代码。
+- 统一演示地址：https://sanchuang-dev.github.io/base-prototype/lingnan/
+- 原独立演示地址（暂保留兼容）：https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/
+- 本分支始终是唯一产品源码；统一 Pages 由 `base-prototype/main` 从此分支组装静态文件，旧发布仓库仅承担历史链接兼容。不得将旧仓库当成新的业务源码仓库。
