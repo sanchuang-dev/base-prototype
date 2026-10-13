@@ -59,6 +59,63 @@ jobs:
         with:
           path: ./_site
 
+      - name: Preserve the exact static site for EdgeOne
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanchuang-site
+          path: ./_site/
+          if-no-files-found: error
+          include-hidden-files: true
+
+  edgeone:
+    # Same artifact, separate deployment result: EdgeOne failure never blocks GitHub Pages.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check EdgeOne setup
+        id: edgeone-auth
+        shell: bash
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: |
+          if [ -n "$EDGEONE_API_TOKEN" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::EdgeOne lab mirror not deployed: repository secret EDGEONE_API_TOKEN is not configured"
+          fi
+
+      - name: Download already-built static site
+        if: steps.edgeone-auth.outputs.configured == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: sanchuang-site
+          path: ./_site
+
+      - name: Prepare Node for EdgeOne CLI
+        if: steps.edgeone-auth.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Publish to EdgeOne Makers (lab.3cgroup.cn)
+        if: steps.edgeone-auth.outputs.configured == 'true'
+        shell: bash
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -s _site/index.html
+          test -s _site/local-life/index.html
+          test -s _site/lingnan/index.html
+          test -s _site/proposal/local-life/index.html
+          test -s _site/proposal/lingnan/index.html
+          npx --yes edgeone makers deploy ./_site -n sanchuang-lab -t "$EDGEONE_API_TOKEN" -e production
+
   deploy:
     if: github.event_name != 'pull_request'
     environment:
