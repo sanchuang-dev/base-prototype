@@ -1,56 +1,10 @@
-# base-prototype 仓库级工作规约（地方基本法）
+# Local-life demo — project instructions
 
-版本：V1.0（2026-10-13）
-上位规则：[三创组织 AGENTS.md](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md)
+Before engineering work, read current `sanchuang-dev/.github/AGENTS.md` and this repository's `main/AGENTS.md` (shared charter). This file holds only the local-life project's own constraints.
 
-## 1. 仓库身份
-
-本仓库是三创的**多客户演示原型库**，用于商务提案、概念验证和交互演示；不是一个单一产品仓库，也不是面向真实用户的生产业务系统。
-
-演示目标是帮助客户理解产品与体验。可以使用静态页、Stitch/Open Design 导出、原生 HTML/CSS/JS 或框架；不强制统一项目架构。
-
-## 2. 分支与环境例外
-
-这是组织标准 `feat/* → dev → test → prod` 的**仓库级原型例外**：
-
-- `main`：仓库治理、演示发布配置、公开演示入口；暂时继续保存既有社区本地生活原型的构建资料。它是发布控制分支，不等同于业务生产环境。
-- `demo/<project-slug>`：今后新增客户原型使用的**长期可变**分支。每个分支独立持有该项目源码与项目专属约束；只发布演示，不进入 `dev/test/prod`。
-- `feat/<change-slug>`：短期改动分支，按变更归属合并到相应的演示分支或 `main`。
-- 历史例外：`feat/lingnan-red-mugwort-prototype` 是岭南项目的长期演示源码分支；`feat/lingnan-pages-publisher` 为已关闭 PR #1 的遗留发布尝试，不是部署真相源。无需为了命名整洁立即重命名或删除。
-
-**禁止跨客户原型分支合并业务代码**，除非维护者明确决定共享实现及迁移范围。新建项目不得擅自另开发布仓库或将演示源代码复制到另一仓库形成第二真相源。
-
-## 3. 源码与规则的归属
-
-- 仓库共性规则以 `main/AGENTS.md` 为唯一权威源。工作于任意客户演示分支时，先阅读组织当前规则与 `main/AGENTS.md`，再读取该分支自己的 `AGENTS.md`、产品资料、任务契约及实际代码。
-- 各客户分支的 `AGENTS.md` 只记述该项目的边界、验证方法及特例，**不复制、改写**仓库级政策。
-- 客户产品决定归客户分支中的设计/说明文档；发布映射由 `main` 中的发布配置拥有；GitHub Actions 与运行中的 Pages 决定技术实际情况。
-- Issue 是工程工作项的契约；PR、CI 和运行验证是证据。不得用 README 或演示目录重新维护工作项状态。
-
-## 4. 统一 GitHub Pages
-
-本仓库只管理**一个** GitHub Pages 站点。不同演示可由统一发布流程从不同分支读取源码，分别放到稳定子路径；一次部署必须包含所有登记项目，不能用单个分支的产物覆盖其他项目。
-
-- `main` 及其发布工作流是统一发布的控制面；客户分支维护内容，但不得自行接管仓库级 Pages。
-- 新项目先在统一发布映射登记分支、源目录和路径，再配置必要的构建/静态校验。
-- 发布配置改动应走独立 PR，至少验证构建清单、原有根页面、每个演示的资源与路由。发布后还要检查实际网址。
-- 不额外部署真实 API、支付、订单、账号数据服务。除非维护者明确授权，不改变已有演示网址或直接删除旧发布渠道。
-- 这是对组织环境模型的**演示发布例外**：Pages 对外公开的是演示产物，并非业务生产环境；不允许借此绕过真实业务仓库的 `prod` 纪律。
-
-## 5. 演示真实性与安全
-
-- 可使用明确标识的样例资料与模拟交互；**不得伪造真实成交、审核、资质、政企背书、医学功效或合作业绩**。
-- 公共仓库和 Pages 不保存密钥、私密客户资料、真实手机号、支付凭据或收货数据；表单与交易模拟必须表明不实际提交/扣款。
-- 外部素材要核对授权及可用性，演示不得将未核实的数据当作事实陈述。
-- 不确定客户授权、商业承诺或实际服务接入时，应明确标记为演示状态。
-
-## 6. 最低验证、实施与验收
-
-- 优先小步修改：一个项目的视觉/交互改动不应顺带改动其他项目及部署。
-- 静态原型至少检查 HTML 内部入口与资源、JS 语法和关键点击流程；变更部署时再检查完整产物与线上路径。
-- CI 成功不等于真实页面验收；不得宣称未执行的浏览器、设备或部署验证已通过。
-- 旧原型可以归档，但现有客户链接的迁移/下线须单独确认并验证。
-
-## 7. 变更权限
-
-遵循组织上位宪法与当前任务/Issue 的授权边界。原型内容修改、PR 合并、Pages 发布、删除旧仓库或下线既有链接是不同动作，不因提交代码就自动获得其余权限。
+- This long-lived `demo/local-life` branch is the **sole source branch** for the original community/local-life prototype. Do not merge its business code into `main` or a different customer's branch.
+- Product contract: `docs/PRD-V0.3.md`. Keep its five tabs, community broadcasting, visible TV/broadband/mobile offers, family-health and benefits structure unless a product decision changes it.
+- Current historical source is under `source/`, `patches/`, `release/`; centralized trusted publisher on `main` reconstructs the current V0.3.3 demo from `release/v0.3.1` and the legacy compatibility transforms.
+- This is demonstration content, not a real community service or government endorsement; simulated actions must remain unmistakable.
+- After changes, compare the resulting demo route/interaction behavior and confirm the published `/local-life/` path. The repository root `/` belongs to the shared demo portal.
+- Repo-level `.github/workflows/pages.yml` inherited from older history is not the publisher for this branch; the actual publisher is `main`.
