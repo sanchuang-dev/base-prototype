@@ -9,6 +9,15 @@
 | 社区本地生活 / 家庭健康 | [`demo/local-life`](https://github.com/sanchuang-dev/base-prototype/tree/demo/local-life) | [`/local-life/`](https://sanchuang-dev.github.io/base-prototype/local-life/) |
 | 岭南红艾文化礼赠 | [`feat/lingnan-red-mugwort-prototype`](https://github.com/sanchuang-dev/base-prototype/tree/feat/lingnan-red-mugwort-prototype) | [`/lingnan/`](https://sanchuang-dev.github.io/base-prototype/lingnan/) |
 
+## 客户定向邀请页
+
+客户沟通时，可以直接分享 `/proposal/<project-slug>/` 链接：访问者先看到项目专属方案封面，再点击“进入方案体验”打开对应原型。
+
+- 邀请页由 `scripts/render_invitations.py` 从 `demos.json` 自动生成，设计模板位于 `portal/invitation.html`；新增已登记项目时无需再复制一份 HTML。
+- 邀请页**不出现在公开展厅首页**，并带有 `noindex` 元信息；不采用账号、密码、验证码或额外服务。
+- **这只是商务展示入口，不是访问控制。** 页面、对应演示与仓库仍然公开，不能用于保密客户资料或敏感提案。
+- 当前未设置真实客户名称或合作身份，避免将尚未确认的客户关系写进公共页面。以后要个性化客户信息需另行取得确认。
+
 ## 协作与发布
 
 - [地方基本法 `main/AGENTS.md`](./AGENTS.md)，上位规则为 [三创组织宪法](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md)。
