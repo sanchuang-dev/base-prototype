@@ -49,7 +49,7 @@ def main():
     if data.get("schema_version") != 1 or not isinstance(data.get("demos"), list):
         raise ValueError("unsupported demos.json schema")
     if not (SITE / "index.html").is_file():
-        raise ValueError("existing root community demo must be built first")
+        raise ValueError("portal index must be rendered before assembling demos")
     original_root_hash = hashlib.sha256((SITE / "index.html").read_bytes()).hexdigest()
     seen = set()
 
@@ -60,6 +60,19 @@ def main():
         seen.add(target)
         if not BRANCH_RE.fullmatch(branch) or ".." in branch or "//" in branch:
             raise ValueError(f"unsafe branch: {branch}")
+        if demo.get("builder") == "legacy-community":
+            if demo_id != "local-life" or branch != "demo/local-life":
+                raise ValueError("unsupported legacy builder mapping")
+            published = SITE / target / "index.html"
+            if not published.is_file():
+                raise ValueError("local-life must be built before static staging")
+            digest = hashlib.sha256(published.read_bytes()).hexdigest()
+            if digest != demo["expected_sha256"]:
+                raise ValueError("local-life content is not the verified release")
+            print(f"demo={demo_id} existing-built sha256={digest} path=/{target}/")
+            continue
+        if "builder" in demo:
+            raise ValueError("unknown demo builder")
         source = demo.get("source_dir", ".")
         if source != ".":
             source = safe_path(source)
@@ -117,8 +130,8 @@ def main():
         print(f"demo={demo_id} branch={branch} rev={rev} files={len(selected)} path=/{target}/")
 
     if original_root_hash != hashlib.sha256((SITE / "index.html").read_bytes()).hexdigest():
-        raise ValueError("root community demo was unexpectedly modified")
-    print(f"root community demo preserved: sha256={original_root_hash}")
+        raise ValueError("portal index was unexpectedly modified")
+    print(f"root portal preserved: sha256={original_root_hash}")
 
 
 if __name__ == "__main__":
