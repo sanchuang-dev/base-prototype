@@ -83,6 +83,8 @@ def main():
             rule = safe_path(item, directory=is_dir)
             file_prefix = "" if source == "." else source + "/"
             source_rule = file_prefix + rule
+            if is_dir:
+                source_rule += "/"
             matches = ([f for f in all_files if f.startswith(source_rule)] if is_dir
                        else ([source_rule] if source_rule in all_files else []))
             if not matches:
