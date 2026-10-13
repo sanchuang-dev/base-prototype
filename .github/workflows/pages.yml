@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -147,12 +150,19 @@ jobs:
           sha256sum _site/index.html
           touch _site/.nojekyll
 
+      - name: Stage independent customer demos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/assemble_demos.py
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
