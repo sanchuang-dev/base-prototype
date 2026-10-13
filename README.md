@@ -1,39 +1,59 @@
-# Base Prototype｜三创客户演示原型库
+# 三创原型实验室 · Sanchuang Lab
 
-本仓库是三创的**多客户概念原型与交互演示中心**。主页为公开原型入口合集，不再由某个客户项目独占。
+用于商务提案、概念验证和交互体验的**多项目原型展厅**。一个仓库维护多份独立客户原型，通过同一套构建流程发布静态演示；不代表正式上线的业务系统。
 
-**演示入口**：[三创客户演示中心](https://sanchuang-dev.github.io/base-prototype/)
+## 立即访问
 
-| 项目 | 唯一业务源码分支 | 独立访问路径 |
+| 入口 | 地址 | 说明 |
 | --- | --- | --- |
-| 社区本地生活 / 家庭健康 | [`demo/local-life`](https://github.com/sanchuang-dev/base-prototype/tree/demo/local-life) | [`/local-life/`](https://sanchuang-dev.github.io/base-prototype/local-life/) |
-| 岭南红艾文化礼赠 | [`feat/lingnan-red-mugwort-prototype`](https://github.com/sanchuang-dev/base-prototype/tree/feat/lingnan-red-mugwort-prototype) | [`/lingnan/`](https://sanchuang-dev.github.io/base-prototype/lingnan/) |
+| **EdgeOne Makers · 当前试用入口** | [sanchuang-lab.edgeone.cool](https://sanchuang-lab.edgeone.cool/) | 腾讯云默认项目域名；可能受地区与预览有效期限制 |
+| **GitHub Pages · 备用入口** | [sanchuang-dev.github.io/base-prototype](https://sanchuang-dev.github.io/base-prototype/) | 保留的公开演示站，已有线上 HTTP 冒烟验证 |
 
-## 客户定向邀请页
+> **国内访问提示**：EdgeOne 默认项目域名在中国大陆网络可能要求限时预览链接，过期可能返回 401，不能视为国内长期稳定的客户地址。若无法打开，请使用 GitHub Pages 备用链接。两站的发布任务已成功，但 EdgeOne 默认网址尚未取得独立的公网访问验收结论。
 
-客户沟通时，可以直接分享 `/proposal/<project-slug>/` 链接：访问者先看到项目专属方案封面，再点击“进入方案体验”打开对应原型。
+## 原型项目
 
-- 邀请页由 `scripts/render_invitations.py` 从 `demos.json` 自动生成，设计模板位于 `portal/invitation.html`；新增已登记项目时无需再复制一份 HTML。
-- 邀请页**不出现在公开展厅首页**，并带有 `noindex` 元信息；不采用账号、密码、验证码或额外服务。
-- **这只是商务展示入口，不是访问控制。** 页面、对应演示与仓库仍然公开，不能用于保密客户资料或敏感提案。
-- 当前未设置真实客户名称或合作身份，避免将尚未确认的客户关系写进公共页面。以后要个性化客户信息需另行取得确认。
+| 项目 | EdgeOne 演示 | GitHub Pages 备用 | 唯一业务源码分支 |
+| --- | --- | --- | --- |
+| **社区本地生活 / 家庭健康** | [进入原型](https://sanchuang-lab.edgeone.cool/local-life/) | [备用](https://sanchuang-dev.github.io/base-prototype/local-life/) | [`demo/local-life`](https://github.com/sanchuang-dev/base-prototype/tree/demo/local-life) |
+| **岭南红艾文化礼赠** | [进入原型](https://sanchuang-lab.edgeone.cool/lingnan/) | [备用](https://sanchuang-dev.github.io/base-prototype/lingnan/) | [`feat/lingnan-red-mugwort-prototype`](https://github.com/sanchuang-dev/base-prototype/tree/feat/lingnan-red-mugwort-prototype) |
 
-## EdgeOne Makers 临时试用地址
+### 客户方案邀请页
 
-- EdgeOne Makers 已通过 GitHub Actions 成功部署到 [`https://sanchuang-lab.edgeone.cool/`](https://sanchuang-lab.edgeone.cool/)；该域名为平台默认项目域名，**不是稳定的中国大陆客户访问承诺**。
-- 项目名称：`sanchuang-lab`；唯一源码及构建工作流仍为本仓库 `main/.github/workflows/pages.yml`，同一份构建产物同时发布 GitHub Pages 和 EdgeOne。
-- 本次不做 `lab.3cgroup.cn` 自定义域名绑定，不办理腾讯云实名认证，DNS 保持不变。需要以后再议，不要自动恢复这条任务。
-- **注意**：[EdgeOne Makers 官方域名规则](https://pages.edgeone.ai/document/domain-overview) 说明，中国大陆网络访问系统项目域名必须使用有效期约 3 小时的预览链接，超时可能返回 HTTP 401；默认域名不可当作面向中国大陆客户长期可用的固定网址。外部访客需要先做真人访问验证。
-- [GitHub Pages 原站](https://sanchuang-dev.github.io/base-prototype/) 永久保留作为已经验证过的备用演示入口；邀请页仍可访问 `/proposal/local-life/` 和 `/proposal/lingnan/` 相对路径。
-- 发生 HTTP 401、域名不可解析或地区限制时，不做绕过平台限制的尝试，也不声称镜像运行正常，直接提供 GitHub Pages 链接。
+将邀请页直接发给客户：先显示有品牌仪式感的项目封面，再由客户点击「进入方案体验」。**邀请页不在公开展厅列出**。
 
-## 协作与发布
+| 项目 | EdgeOne 邀请页 | GitHub Pages 备用 |
+| --- | --- | --- |
+| 本地生活 | [查看方案封面](https://sanchuang-lab.edgeone.cool/proposal/local-life/) | [备用](https://sanchuang-dev.github.io/base-prototype/proposal/local-life/) |
+| 岭南红艾 | [查看方案封面](https://sanchuang-lab.edgeone.cool/proposal/lingnan/) | [备用](https://sanchuang-dev.github.io/base-prototype/proposal/lingnan/) |
 
-- [地方基本法 `main/AGENTS.md`](./AGENTS.md)，上位规则为 [三创组织宪法](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md)。
-- [`demos.json`](./demos.json) 是唯一的公开演示目录及来源登记；`portal/index.html` 是首页展示模板。
-- `main/.github/workflows/pages.yml` 将多个独立业务分支的内容组合成**一个** Pages 部署产物。仓库主分支不接受跨项目业务代码。
-- 新客户优先创建 `demo/<project-slug>` 分支，再登记演示入口。保持演示性质，不接生产后端或真实客户资料。
-- 旧岭南独立发布地址 https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/ 暂时保留以兼容既有链接。
-- 原本从 `/base-prototype/#/...` 打开的本地生活深链接，会在入口页重定向至 `/base-prototype/local-life/#/...`。
+邀请页设置了 `noindex`，但**不是登录、鉴权或保密机制**。页面、原型和代码均公开；禁止上传真实客户敏感资料，也不要将其描述为经过安全隔离的私有站点。
 
-原社区项目的 PRD、压缩源文件、历史修订和发布存档已迁至 `demo/local-life` 分支。静态原型中的内容与交互仅用于演示，不代表实际订单、服务或合作关系。
+## 仓库结构与发布
+
+```text
+main                     展厅入口、共享规则、发布工作流
+├─ AGENTS.md              本仓库地方基本法
+├─ demos.json             演示来源 / 路径 / 展示元信息（唯一登记）
+├─ portal/                公开展厅与邀请页模板
+├─ scripts/               原型组装与页面生成
+└─ .github/workflows/     统一构建、双站发布、GitHub Pages HTTP 冒烟
+
+demo/local-life          社区本地生活（独立长期分支）
+feat/lingnan-red-mugwort-prototype
+                         岭南红艾（既有长期分支例外）
+```
+
+- [地方基本法](AGENTS.md) 继承 [三创组织宪法](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md)；客户项目业务代码不得合并进 `main`。
+- 统一工作流 [`pages.yml`](.github/workflows/pages.yml) 组装一份 `_site`，分别发布到 **GitHub Pages** 与 **EdgeOne Makers** 项目 `sanchuang-lab`。Token 存在 GitHub Actions Secret `EDGEONE_API_TOKEN`，不入库。
+- `main` 提交或手动运行工作流会触发构建/发布；**仅修改客户原型分支不会自动发布到两个站点**，需在 `main` 手动重跑工作流。
+- 新增原型：创建长期 `demo/<slug>` 分支，在 [`demos.json`](demos.json) 登记并接入构建；展厅卡片和通用邀请页由登记自动生成。
+- [GitHub Actions 记录](https://github.com/sanchuang-dev/base-prototype/actions) 是发布和检查的事实来源；成功部署与客户所在地区可访问是两个不同的验收结论。
+
+## 当前决定
+
+- **`lab.3cgroup.cn` 暂缓**：不进行腾讯云实名认证、域名绑定、CNAME 或 DNS 改动；后续只有在明确要求时才恢复。
+- EdgeOne 默认项目地址继续作为试用入口；GitHub Pages 保留作为备用。
+- 旧岭南独立发布地址 [`lingnan-red-mugwort-pages`](https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/) 暂时保留，避免历史分享链接失效。
+
+所有页面仅供产品讨论和交互演示，示例服务、商品、价格及合作关系不构成真实交付承诺。
