@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#17352c">
+  <meta name="description" content="三创数字方案 · 定向交互预览">
+  <title><!--TITLE--> · 三创方案预览</title>
+  <style>
+    :root{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#132a24;color:#25372f;font-synthesis:none;-webkit-font-smoothing:antialiased}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh}a{color:inherit;text-decoration:none}
+    a:focus-visible{outline:3px solid #8aa999;outline-offset:5px}
+    .page{min-height:100vh;padding:32px clamp(20px,5vw,72px) 26px;display:flex;flex-direction:column;max-width:1600px;margin:auto;isolation:isolate;position:relative;overflow:hidden}
+    .page:before{content:"";position:absolute;width:780px;height:780px;border:1px solid #476155;border-radius:50%;left:-530px;top:10%;opacity:.22;pointer-events:none}
+    .masthead{display:flex;align-items:center;justify-content:space-between;gap:20px;color:#edf1e9;position:relative;z-index:1}
+    .brand{display:flex;gap:11px;align-items:center;letter-spacing:.12em;font-weight:740;font-size:15px}
+    .brandmark{width:34px;height:34px;border:1px solid #a6b9a9;border-radius:9px;display:grid;place-items:center;color:#d0dacf;font-family:"Songti SC",serif;font-size:22px}
+    .masthead-note{color:#a7b8aa;font-size:10px;letter-spacing:.17em;font-weight:650}
+    .stage{width:100%;flex:1;display:grid;align-items:center;justify-items:center;padding:clamp(32px,6vh,76px) 0}
+    .sheet{--accent:#536e5f;--ink:#27443a;--wash:#d6e5d9;--line:#dce0d6;display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.88fr);max-width:1060px;width:100%;min-height:590px;background:#f4f2e9;border-radius:18px;box-shadow:0 32px 100px #07181372;overflow:hidden}
+    .sheet.botanical{--accent:#776d51;--ink:#4c4b35;--wash:#e7ddbe;--line:#ded9ca}
+    .content{padding:clamp(32px,5vw,72px);display:flex;flex-direction:column;justify-content:space-between;gap:35px;position:relative}
+    .section-label{display:flex;align-items:center;gap:11px;font-size:11px;letter-spacing:.18em;font-weight:700;color:var(--accent)}
+    .section-label:before{content:"";width:28px;height:1px;background:currentColor;flex:none}
+    .intro{margin-top:auto}
+    .eyebrow{font-size:11px;color:#8a968a;letter-spacing:.17em;font-weight:680;margin:0 0 16px}
+    h1{margin:0;color:var(--ink);font-family:"Songti SC","Noto Serif CJK SC",serif;font-weight:600;font-size:clamp(36px,4.8vw,62px);line-height:1.22;letter-spacing:-.04em}
+    .headline{margin:23px 0 12px;font-size:16px;font-weight:580;line-height:1.6;color:#33483b}
+    .summary{color:#7d867b;font-size:13px;line-height:2;max-width:360px;margin:0}
+    .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 30px}
+    .pill{border:1px solid #d1d8cc;border-radius:99px;font-size:11px;color:#687b6c;padding:7px 13px}
+    .action{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--ink);color:#fbfcf8;max-width:340px;border-radius:9px;padding:17px 21px;font-size:14px;font-weight:640;transition:transform .22s,box-shadow .22s}
+    .action:hover{transform:translateY(-2px);box-shadow:0 12px 20px #27443a25}
+    .action span:last-child{font-size:22px;font-weight:350;line-height:1}
+    .meta{display:flex;align-items:center;gap:28px;padding-top:22px;border-top:1px solid var(--line);font-size:11px;color:#889185}
+    .meta strong{display:block;color:#526457;margin-top:6px;font-size:12px;font-weight:620}
+    .display{background:linear-gradient(145deg,var(--wash),#d8ddd0);position:relative;min-height:380px;isolation:isolate;overflow:hidden}
+    .botanical .display{background:linear-gradient(145deg,#e8e2d2,#d9d4c2)}
+    .display:before{content:"";position:absolute;inset:35px;border:1px solid #ffffff91;border-radius:50% 50% 47% 47%;transform:rotate(-24deg)}
+    .display:after{content:"";position:absolute;inset:70px 65px;border:1px solid #ffffff86;border-radius:50%;transform:rotate(20deg)}
+    .orbits{position:absolute;width:430px;height:430px;border:1px solid #719d87;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 45px #ffffff27,0 0 0 47px #ffffff6c,0 0 0 103px #ffffff25}
+    .botanical .orbits{border-color:#a6a17b}
+    .symbol{position:absolute;inset:0;display:grid;place-items:center;font-family:"Songti SC","Noto Serif CJK SC",serif;font-size:clamp(150px,18vw,270px);line-height:1;color:var(--ink);opacity:.25;transform:rotate(-10deg)}
+    .display-number{position:absolute;right:29px;top:25px;color:#5b7767;font-size:11px;letter-spacing:.1em;font-weight:700}
+    .display-footer{position:absolute;bottom:28px;left:30px;right:30px;display:flex;justify-content:space-between;align-items:end;gap:12px;color:#617666;font-size:10px;letter-spacing:.13em}
+    .foot{display:flex;justify-content:space-between;gap:22px;align-items:center;flex-wrap:wrap;color:#9eafa4;font-size:11px;line-height:1.8;position:relative;z-index:1}
+    .foot span:last-child{max-width:530px;text-align:right}
+    @media(max-width:760px){.page{padding:22px 16px}.masthead-note{font-size:9px}.stage{padding:25px 0}.sheet{display:flex;flex-direction:column-reverse;min-height:0}.display{min-height:225px}.display:before{inset:24px}.display:after{inset:42px}.orbits{width:275px;height:275px;box-shadow:0 0 0 29px #ffffff22,0 0 0 30px #ffffff68}.symbol{font-size:150px}.content{padding:29px 26px 32px;gap:26px}.intro{margin-top:0}h1{font-size:38px}.pill-row{margin:23px 0}.action{max-width:none}.foot span:last-child{text-align:left}}
+    @media(prefers-reduced-motion:reduce){.action{transition:none}.action:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="brand"><div class="brandmark" aria-hidden="true">创</div><span>三创 SANCHUANG</span></div>
+      <span class="masthead-note">CURATED PROJECT EXPERIENCE</span>
+    </header>
+    <main class="stage">
+      <article class="sheet <!--THEME-->">
+        <div class="content">
+          <div class="section-label">定向方案预览</div>
+          <div class="intro">
+            <p class="eyebrow">DIGITAL EXPERIENCE / PROPOSAL</p>
+            <h1><!--TITLE--></h1>
+            <p class="headline">为本次项目沟通准备的交互演示</p>
+            <p class="summary"><!--SUMMARY--></p>
+            <div class="pill-row"><!--FEATURES--></div>
+            <a class="action" href="../../<!--PATH-->/" aria-label="进入<!--TITLE-->交互演示">
+              <span>进入方案体验</span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="meta">
+            <div>方案状态<strong>交互预览版</strong></div>
+            <div>展示单位<strong>三创 · 数字方案</strong></div>
+          </div>
+        </div>
+        <div class="display" aria-hidden="true">
+          <div class="orbits"></div>
+          <div class="symbol"><!--SYMBOL--></div>
+          <span class="display-number">EXPERIENCE / <!--NUMBER--></span>
+          <div class="display-footer"><span>CONCEPT · INTERACTION · DESIGN</span><span>SC / <!--NUMBER--></span></div>
+        </div>
+      </article>
+    </main>
+    <footer class="foot">
+      <span>© 三创 · 数字方案展示</span>
+      <span>本页面仅用于方案沟通与概念演示，不代表真实服务、合作或交付承诺。</span>
+    </footer>
+  </div>
+</body>
+</html>
