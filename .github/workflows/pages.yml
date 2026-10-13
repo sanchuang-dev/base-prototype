@@ -46,6 +46,14 @@ jobs:
           set -euo pipefail
           python3 scripts/assemble_demos.py
 
+      - name: Render client proposal invitations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/render_invitations.py
+          test -s _site/proposal/local-life/index.html
+          test -s _site/proposal/lingnan/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -91,8 +99,17 @@ jobs:
           fetch "lingnan/" lingnan.html
           fetch "lingnan/app.css" lingnan.css
           fetch "lingnan/app.js" lingnan.js
+          fetch "proposal/local-life/" proposal-local.html
+          fetch "proposal/lingnan/" proposal-lingnan.html
 
           grep -q '三创 · 演示中心' "$tmp/portal.html"
+          ! grep -q '/proposal/' "$tmp/portal.html"
+          grep -q 'name="robots" content="noindex,nofollow,noarchive"' "$tmp/proposal-local.html"
+          grep -q 'name="robots" content="noindex,nofollow,noarchive"' "$tmp/proposal-lingnan.html"
+          grep -q 'href="../../local-life/"' "$tmp/proposal-local.html"
+          grep -q 'href="../../lingnan/"' "$tmp/proposal-lingnan.html"
+          grep -q '社区本地生活' "$tmp/proposal-local.html"
+          grep -q '岭南红艾' "$tmp/proposal-lingnan.html"
           grep -q 'href="./local-life/"' "$tmp/portal.html"
           grep -q 'href="./lingnan/"' "$tmp/portal.html"
           grep -q '本地生活服务' "$tmp/community.html"
