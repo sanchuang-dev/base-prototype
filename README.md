@@ -1,55 +1,25 @@
-# Base Prototype
+# Base Prototype｜三创客户演示原型库
 
-社区家庭健康服务平台高保真原型的 GitHub Pages 演示仓库。
+本仓库统一存放**多客户、高保真、可交互的商务演示原型**。不同项目分别使用长期分支，避免把客户业务代码混在一起。
 
-当前产品契约：**V0.3**
+- 仓库工作规约：[`AGENTS.md`](./AGENTS.md)（受 [三创组织宪法](https://github.com/sanchuang-dev/.github/blob/main/AGENTS.md) 约束）
+- 公开演示站点：https://sanchuang-dev.github.io/base-prototype/
+- 发布控制：`main` 上的 `.github/workflows/pages.yml`
+- 新增客户原型：优先 `demo/<project-slug>` 长期分支；发布入口由 `main` 统一登记和构建
 
-## Product docs
+## 当前原型
 
-- V0.3 产品结论：`docs/PRD-V0.3.md`
+| 演示项目 | 源码分支 | 公开演示 |
+| --- | --- | --- |
+| 社区本地生活 / 家庭健康 | `main`（历史原型） | [社区演示主页](https://sanchuang-dev.github.io/base-prototype/) |
+| 岭南红艾文化礼赠 | `feat/lingnan-red-mugwort-prototype`（历史命名例外） | [现有独立演示](https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/) |
 
-## Prototype source
+> 岭南原型目前仍通过临时的独立发布仓库展示；统一 Pages 的 `/lingnan/` 路径待发布链路调整并验收后启用。不要把规划当成现状。
 
-原始 Open Design 导出为单文件 `index.html`。仓库以无损 gzip + base64 文本分片保存原始导出：
+## 历史社区演示
 
-`source/index.html.gz.b64.part.*`
+此仓库最初只保存「社区家庭健康服务平台」原型，目前社区产品契约为 [V0.3](docs/PRD-V0.3.md)。演示覆盖社区消息、广播、活动、广电业务、积分、健康服务与惠生活。
 
-原始导出 SHA-256：
+社区原型使用静态 HTML。既有重建资料保留在 `source/`、`patches/`、`release/`；**实际构建步骤及校验哈希以 `.github/workflows/pages.yml` 为准**，不手动改动生成物冒充已发布内容。
 
-`62b6efd29adb48d8cd6c73920d4258d3561629ac8ad74c6b4b0a6c13fa3b9438`
-
-V0.2 修订：
-
-`patches/v0.2.patch.gz.b64`
-
-V0.2 SHA-256：
-
-`aa5623463ac4d8760b4ede157b1563fdb4e9748f94aee1fa82757e7ba27c7314`
-
-V0.3 修订：
-
-`patches/v0.3.patch.gz.b64`
-
-V0.3 最终页面 SHA-256：
-
-`65981351a165ea7cade72427059429d398057a6f90a7ea1feae40e4925a0bf99`
-
-Pages workflow 会按 **原始导出 → V0.2 → V0.3** 顺序重建页面，并在每一步做哈希校验。任何一步不一致，发布都会直接失败。
-
-## V0.3 focus
-
-- 首页回归低心智结构：**Banner → 常用服务 → 社区消息 → 今日社区 → 积分 → 健康 → 惠生活**
-- 广电服务在首页独立强露出
-- **手机卡 / 宽带 / 电视 / 上门服务**直接可见，不使用行业黑话
-- 固定金刚区：社区广播 / 健康服务 / 党群文化 / 社区活动
-- 其它服务入口按街道项目资源配置，例如学习服务、办事指引、社区食堂、街坊消息
-- 社区广播作为公共触达，小程序承接重听、文字、活动和服务
-- 广播公共属性与商业内容保持边界
-- 五个一级 Tab 保持：首页 / 社区 / 健康 / 惠生活 / 我的
-
-## Deployment
-
-- Branch: `main`
-- Workflow: `.github/workflows/pages.yml`
-- Pages: https://sanchuang-dev.github.io/base-prototype/
-- Static export uses hash routing, so no SPA rewrite is required.
+所有项目仍属于演示，界面中出现的业务与数字不代表已实际对接。正式业务仓库需另行遵守组织的正常交付与生产发布规范。
