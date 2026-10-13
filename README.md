@@ -12,9 +12,9 @@
 | 演示项目 | 源码分支 | 公开演示 |
 | --- | --- | --- |
 | 社区本地生活 / 家庭健康 | `main`（历史原型） | [社区演示主页](https://sanchuang-dev.github.io/base-prototype/) |
-| 岭南红艾文化礼赠 | `feat/lingnan-red-mugwort-prototype`（历史命名例外） | [现有独立演示](https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/) |
+| 岭南红艾文化礼赠 | `feat/lingnan-red-mugwort-prototype`（历史命名例外） | [统一演示 /lingnan/](https://sanchuang-dev.github.io/base-prototype/lingnan/) |
 
-> 岭南原型目前仍通过临时的独立发布仓库展示；统一 Pages 的 `/lingnan/` 路径待发布链路调整并验收后启用。不要把规划当成现状。
+> 岭南原型已经从独立业务分支组装到本仓库统一 Pages，部署后 HTTP 冒烟校验通过。旧地址 https://sanchuang-dev.github.io/lingnan-red-mugwort-pages/ 暂保留兼容，尚未下线；后续客户原型在 [`demos.json`](./demos.json) 登记。
 
 ## 历史社区演示
 
