@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "demos": [
+    {
+      "id": "lingnan",
+      "branch": "feat/lingnan-red-mugwort-prototype",
+      "publish_path": "lingnan",
+      "source_dir": ".",
+      "include": [
+        "index.html",
+        "app.css",
+        "app.js"
+      ]
+    }
+  ]
+}
