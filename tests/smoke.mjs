@@ -4,10 +4,14 @@ const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: {width:390,height:844}, deviceScaleFactor:1 });
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
-// The visual concept uses external photos; interaction smoke is deterministic without image network.
-await page.route('**/lh3.googleusercontent.com/**', route => route.abort());
+// Image smoke uses locally committed assets and does not depend on Google image network.
 await page.goto('http://127.0.0.1:8765/#/home', { waitUntil:'domcontentloaded' });
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'home');
+const heroImage = await page.request.get('http://127.0.0.1:8765/assets/images/hero-editorial.webp');
+assert.equal(heroImage.status(), 200, 'homepage image must be available locally');
+assert.match(heroImage.headers()['content-type'] ?? '', /image\/webp/, 'hero image must serve as WebP');
+assert.match(await page.locator('.editorial-hero').getAttribute('style'), /assets\/images\/hero-editorial.webp/);
+
 assert.equal(await page.locator('nav.tabbar .tab').count(), 5);
 assert.match(await page.locator('.editorial-hero h2').innerText(), /以艾寄安/);
 assert.equal(await page.locator('.collection-tile').count(), 2);
@@ -128,7 +132,6 @@ await page.screenshot({path:'mobile-smoke.png',fullPage:true});
 
 const desktop = await browser.newPage({viewport:{width:1440,height:940},deviceScaleFactor:1});
 desktop.on('pageerror',e=>errors.push(e.message));
-await desktop.route('**/lh3.googleusercontent.com/**', route=>route.abort());
 await desktop.goto('http://127.0.0.1:8765/#/home',{waitUntil:'domcontentloaded'});
 assert.equal(await desktop.locator('.showcase').isVisible(),true);
 assert.equal(await desktop.locator('.collection-tile').count(),2);
