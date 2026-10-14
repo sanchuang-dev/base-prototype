@@ -14,7 +14,7 @@
 
 ## 视觉来源
 
-根据用户上传的 Stitch 五屏导出（首页合作看板、文化科普、品牌首页、礼盒商城、企业定制）与 `lingnan_red_mugwort_botanical_heritage/DESIGN.md` 改编。承袭深草木绿、朱砂红、宣纸白、新中式宋体层级。页面图片引用 Stitch 导出的远程图片地址；断网或资源失效可能影响部分配图，应在商用前替换成具有明确版权的本地资源。
+根据用户上传的 Stitch 五屏导出（首页合作看板、文化科普、品牌首页、礼盒商城、企业定制）与 `lingnan_red_mugwort_botanical_heritage/DESIGN.md` 改编。承袭深草木绿、朱砂红、宣纸白、新中式宋体层级。页面使用的 9 张 Stitch 导出图片已保存在本分支的 `assets/images/`（WebP），并在 `assets/images/sources.json` 记录原始来源与哈希。HTML 采用相对路径，国内访问无需连接 Google 图片服务。字体使用系统字体后备栈，不加载 Google Fonts。图片仅用于客户演示，正式商用前仍须核实素材使用权。
 
 ## 开发约定
 
