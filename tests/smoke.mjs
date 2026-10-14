@@ -4,7 +4,7 @@ const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: {width:390,height:844}, deviceScaleFactor:1 });
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
-// The visual concept uses external photos; interaction smoke is deterministic without image network.
+// Image smoke uses locally committed assets and does not depend on Google image network.
 await page.goto('http://127.0.0.1:8765/#/home', { waitUntil:'domcontentloaded' });
 assert.equal(await page.locator('[data-page].active').getAttribute('data-page'), 'home');
 const heroImage = await page.request.get('http://127.0.0.1:8765/assets/images/hero-editorial.webp');
