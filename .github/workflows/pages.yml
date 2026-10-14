@@ -156,6 +156,9 @@ jobs:
           fetch "lingnan/" lingnan.html
           fetch "lingnan/app.css" lingnan.css
           fetch "lingnan/app.js" lingnan.js
+          fetch "lingnan/assets/images/hero-editorial.webp" lingnan-hero.webp
+          test "$(wc -c < "$tmp/lingnan-hero.webp")" -gt 1000
+          file "$tmp/lingnan-hero.webp" | grep -q "Web/P image"
           fetch "proposal/local-life/" proposal-local.html
           fetch "proposal/lingnan/" proposal-lingnan.html
 
@@ -175,4 +178,6 @@ jobs:
           grep -q 'data-page="trial"' "$tmp/lingnan.html"
           grep -q './app.css' "$tmp/lingnan.html"
           grep -q './app.js' "$tmp/lingnan.html"
+          grep -q './assets/images/hero-editorial.webp' "$tmp/lingnan.html"
+          ! grep -q 'lh3.googleusercontent.com' "$tmp/lingnan.html"
           echo "Published site pages and static assets confirmed"
