@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Verify the demo is self-contained and the migrated Stitch imagery is served locally."""
-from html.parser import HTMLParser
 from pathlib import Path
 import json
 import re
@@ -10,6 +9,7 @@ html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "app.css").read_text(encoding="utf-8")
 js = (root / "app.js").read_text(encoding="utf-8")
 assert "lh3.googleusercontent.com" not in html + css + js, "Google image hotlink reintroduced"
+assert "fonts.googleapis.com" not in css, "Google Fonts dependency reintroduced"
 
 refs = re.findall(r"\./assets/images/([a-z0-9-]+\.webp)", html)
 assert len(refs) >= 9, f"Expected nine demo images; got {len(refs)} refs"
