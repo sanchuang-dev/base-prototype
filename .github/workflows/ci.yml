@@ -9,6 +9,7 @@ on:
       - "app.js"
       - "app.css"
       - "tests/**"
+      - "assets/images/**"
 jobs:
   static-and-browser-smoke:
     runs-on: ubuntu-latest
@@ -33,6 +34,8 @@ jobs:
               assert asset in html
           print("7 routes and local asset links OK")
           PY
+      - name: All Lingnan images are local and present
+        run: python3 tests/check_local_images.py
       - name: Install headless browser
         run: |
           npm install --no-save playwright@1.56.1
