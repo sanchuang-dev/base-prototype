@@ -25,7 +25,8 @@
       "include": [
         "index.html",
         "app.css",
-        "app.js"
+        "app.js",
+        "assets/"
       ],
       "title": "岭南红艾",
       "category": "CULTURE · BRAND EXPERIENCE",
