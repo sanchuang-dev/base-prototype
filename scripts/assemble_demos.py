@@ -54,10 +54,22 @@ def main():
     seen = set()
 
     for demo in data["demos"]:
-        demo_id, branch, target = demo["id"], demo["branch"], demo["publish_path"]
+        demo_id, target = demo["id"], demo["publish_path"]
         if not SLUG_RE.fullmatch(demo_id) or target != demo_id or target in seen:
             raise ValueError(f"invalid/duplicate publish path: {target}")
         seen.add(target)
+        if demo.get("builder") == "external-link":
+            # These apps own their own Pages deployments. The portal only links to them.
+            # Validate URLs through the same central helper, never fetch their code.
+            from render_portal import verified_external_urls
+            verified_external_urls(demo)
+            if "branch" in demo or "include" in demo or "source_dir" in demo:
+                raise ValueError(f"external link must not stage code: {demo_id}")
+            if (SITE / target).exists():
+                raise ValueError(f"external link must not publish local content: {demo_id}")
+            print(f"demo={demo_id} external-link: {demo['external_url']}")
+            continue
+        branch = demo["branch"]
         if not BRANCH_RE.fullmatch(branch) or ".." in branch or "//" in branch:
             raise ValueError(f"unsafe branch: {branch}")
         if demo.get("builder") == "legacy-community":
