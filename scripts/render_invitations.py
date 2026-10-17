@@ -26,7 +26,8 @@ def main():
     if "/proposal/" in public_index:
         raise SystemExit("Proposal invitation paths must not be listed on the public lobby")
 
-    projects = source["demos"]
+    # External preview cards link to source-owned Pages; they have no local proposal cover.
+    projects = [demo for demo in source["demos"] if demo.get("builder") != "external-link"]
     for index, demo in enumerate(projects, 1):
         slug = demo["publish_path"]
         if not isinstance(slug, str) or not SLUG.fullmatch(slug) or slug == "proposal":

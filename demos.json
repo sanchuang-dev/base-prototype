@@ -37,6 +37,70 @@
         "企业定制"
       ],
       "theme": "botanical"
+    },
+    {
+      "id": "jianqu",
+      "publish_path": "jianqu",
+      "builder": "external-link",
+      "external_url": "https://sanchuang-dev.github.io/ai-mirror/dev/",
+      "source_repository": "https://github.com/sanchuang-dev/ai-mirror",
+      "title": "见趣 · 闺蜜机",
+      "category": "AI COMPANION · SENIOR SCREEN",
+      "summary": "面向大屏 Android 闺蜜机的内容、活动与 AI 陪伴首页。当前为 H01 工程演示，不是正式业务服务。",
+      "features": [
+        "大屏陪伴",
+        "日光 / 暖夜",
+        "H01 工程预览"
+      ],
+      "theme": "mirror"
+    },
+    {
+      "id": "ai-hair-mirror",
+      "publish_path": "ai-hair-mirror",
+      "builder": "external-link",
+      "external_url": "https://sanchuang-dev.github.io/ai-hair-mirror/",
+      "source_repository": "https://github.com/sanchuang-dev/ai-hair-mirror",
+      "title": "AI 美发魔镜",
+      "category": "AI MIRROR · HAIR STYLING",
+      "summary": "从形象与发型探索出发，体验智能美发镜的交互概念。",
+      "features": [
+        "发型探索",
+        "形象体验",
+        "交互预览"
+      ],
+      "theme": "mirror"
+    },
+    {
+      "id": "ai-fitting-mirror",
+      "publish_path": "ai-fitting-mirror",
+      "builder": "external-link",
+      "external_url": "https://sanchuang-dev.github.io/ai-fitting-mirror/",
+      "source_repository": "https://github.com/sanchuang-dev/ai-fitting-mirror",
+      "title": "AI 试衣魔镜",
+      "category": "AI MIRROR · VIRTUAL FITTING",
+      "summary": "围绕风格选择与搭配想象，展示 AI 试衣场景的交互原型。",
+      "features": [
+        "风格搭配",
+        "试衣探索",
+        "交互预览"
+      ],
+      "theme": "mirror"
+    },
+    {
+      "id": "ai-beauty-mirror",
+      "publish_path": "ai-beauty-mirror",
+      "builder": "external-link",
+      "external_url": "https://sanchuang-dev.github.io/ai-beauty-mirror/",
+      "source_repository": "https://github.com/sanchuang-dev/ai-beauty-mirror",
+      "title": "AI 美妆镜",
+      "category": "AI MIRROR · BEAUTY",
+      "summary": "让妆容建议与美妆探索更直观，呈现 AI 美妆镜的交互体验。",
+      "features": [
+        "妆容探索",
+        "美妆体验",
+        "交互预览"
+      ],
+      "theme": "mirror"
     }
   ]
 }
