@@ -4,32 +4,12 @@ from html import escape
 import json
 from pathlib import Path
 import re
-from urllib.parse import urlparse
+from demo_links import verified_external_urls
 
 data = json.loads(Path("demos.json").read_text(encoding="utf-8"))
 items = data["demos"]
 if not items:
     raise SystemExit("At least one registered demo is required")
-
-
-def verified_external_urls(demo):
-    """External entries link only to this organization's published demo and repo."""
-    if demo.get("builder") != "external-link":
-        raise ValueError("Not an external-link entry")
-    destination = urlparse(demo["external_url"])
-    repo = urlparse(demo["source_repository"])
-    expected = demo["id"]
-    if (destination.scheme != "https" or destination.netloc != "sanchuang-dev.github.io"
-            or destination.path not in (f"/{expected}/", "/ai-mirror/dev/")
-            or destination.params or destination.query or destination.fragment):
-        raise SystemExit(f"Unapproved external demo URL: {expected}")
-    if (expected == "jianqu") != (destination.path == "/ai-mirror/dev/"):
-        raise SystemExit("External demo ID and URL mismatch")
-    if (repo.scheme != "https" or repo.netloc != "github.com"
-            or repo.path != f"/sanchuang-dev/{'ai-mirror' if expected == 'jianqu' else expected}"
-            or repo.params or repo.query or repo.fragment):
-        raise SystemExit(f"Unapproved source URL: {expected}")
-    return escape(demo["external_url"], quote=True), escape(demo["source_repository"], quote=True)
 
 
 cards = []
@@ -41,7 +21,7 @@ for index, demo in enumerate(items, 1):
     if theme not in ("local", "botanical", "mirror"):
         raise SystemExit("Unknown card theme")
     chips = "".join('<span class="chip">' + escape(x) + '</span>' for x in demo["features"])
-    label = "外部工程预览" if demo.get("builder") == "external-link" else "交互原型"
+    label = "独立项目预览" if demo.get("builder") == "external-link" else "交互原型"
     inner = f"""<div class="art" aria-hidden="true"></div>
       <div class="project-top"><span class="project-id">PROJECT / {index:02d}</span><span class="project-type">{label}</span></div>
       <div class="project-content"><span class="category">{escape(demo["category"])}</span>
