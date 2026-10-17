@@ -5,6 +5,7 @@ Source-of-truth: demos.json. No cross-project merge or secondary publishing repo
 """
 import hashlib
 from html.parser import HTMLParser
+from demo_links import verified_external_urls
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -61,7 +62,6 @@ def main():
         if demo.get("builder") == "external-link":
             # These apps own their own Pages deployments. The portal only links to them.
             # Validate URLs through the same central helper, never fetch their code.
-            from render_portal import verified_external_urls
             verified_external_urls(demo)
             if "branch" in demo or "include" in demo or "source_dir" in demo:
                 raise ValueError(f"external link must not stage code: {demo_id}")
