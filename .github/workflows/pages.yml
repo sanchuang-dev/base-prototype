@@ -205,7 +205,7 @@ jobs:
           grep -q 'href="../../lingnan/"' "$tmp/proposal-lingnan.html"
           grep -q '社区本地生活' "$tmp/proposal-local.html"
           grep -q '岭南红艾' "$tmp/proposal-lingnan.html"
-          grep -q 'href="./local-life/"' "$tmp/portal.html"
+          grep -Fq 'href="https://sanchuang-dev.github.io/local-life/"' "$tmp/portal.html"
           grep -q 'href="./lingnan/"' "$tmp/portal.html"
           # External mirror previews are links to their own Pages, never copied into this site.
           grep -Fq 'href="https://sanchuang-dev.github.io/ai-mirror/dev/"' "$tmp/portal.html"

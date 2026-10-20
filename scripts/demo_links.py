@@ -8,8 +8,12 @@ from urllib.parse import urlparse
 
 def verified_external_urls(demo):
     """Return HTML-safe preview/repository links after validating both targets."""
-    if demo.get("builder") != "external-link":
-        raise ValueError("Not an external-link entry")
+    # Keep the already-published legacy /local-life/ path intact while its
+    # directory card opens the newer, independently maintained prototype.
+    external = demo.get("builder") == "external-link"
+    legacy_preview = demo.get("builder") == "legacy-community" and demo.get("id") == "local-life"
+    if not (external or legacy_preview) or not demo.get("external_url"):
+        raise ValueError("Not an approved external preview entry")
     expected = demo["id"]
     destination = urlparse(demo["external_url"])
     repo = urlparse(demo["source_repository"])

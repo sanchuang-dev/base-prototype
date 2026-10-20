@@ -21,13 +21,13 @@ for index, demo in enumerate(items, 1):
     if theme not in ("local", "botanical", "mirror"):
         raise SystemExit("Unknown card theme")
     chips = "".join('<span class="chip">' + escape(x) + '</span>' for x in demo["features"])
-    label = "独立项目预览" if demo.get("builder") == "external-link" else "交互原型"
+    label = "独立项目预览" if demo.get("external_url") else "交互原型"
     inner = f"""<div class="art" aria-hidden="true"></div>
       <div class="project-top"><span class="project-id">PROJECT / {index:02d}</span><span class="project-type">{label}</span></div>
       <div class="project-content"><span class="category">{escape(demo["category"])}</span>
         <h3>{escape(demo["title"])}</h3><p class="project-description">{escape(demo["summary"])}</p>
         <div class="chips">{chips}</div>"""
-    if demo.get("builder") == "external-link":
+    if demo.get("external_url"):
         link, source = verified_external_urls(demo)
         cards.append(f"""<article class="project {theme}">
       {inner}

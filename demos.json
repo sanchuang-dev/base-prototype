@@ -15,7 +15,9 @@
         "家庭健康",
         "积分礼遇"
       ],
-      "theme": "local"
+      "theme": "local",
+      "external_url": "https://sanchuang-dev.github.io/local-life/",
+      "source_repository": "https://github.com/sanchuang-dev/local-life"
     },
     {
       "id": "lingnan",
