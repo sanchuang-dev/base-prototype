@@ -15,22 +15,23 @@
 
 | 项目 | EdgeOne 演示 | GitHub Pages 备用 | 唯一业务源码分支 |
 | --- | --- | --- | --- |
-| **社区本地生活 / 家庭健康** | [进入原型](https://sanchuang-lab.edgeone.cool/local-life/) | [备用](https://sanchuang-dev.github.io/base-prototype/local-life/) | [`demo/local-life`](https://github.com/sanchuang-dev/base-prototype/tree/demo/local-life) |
+| **社区本地生活 / 家庭健康（历史演示）** | [旧版原型](https://sanchuang-lab.edgeone.cool/local-life/) | [旧版备用](https://sanchuang-dev.github.io/base-prototype/local-life/) | [`demo/local-life`](https://github.com/sanchuang-dev/base-prototype/tree/demo/local-life) |
 | **岭南红艾文化礼赠** | [进入原型](https://sanchuang-lab.edgeone.cool/lingnan/) | [备用](https://sanchuang-dev.github.io/base-prototype/lingnan/) | [`feat/lingnan-red-mugwort-prototype`](https://github.com/sanchuang-dev/base-prototype/tree/feat/lingnan-red-mugwort-prototype) |
 
 
-### AI 镜面系列 · 独立项目预览入口
+### 独立项目预览入口
 
-以下项目各自维护源码和 GitHub Pages。展厅仅提供链接，**不复制源码或再次部署它们**；链接到的页面是演示，不等于已实现正式业务。
+以下项目各自维护源码和 GitHub Pages。展厅卡片仅提供链接，**不复制源码或再次部署它们**；链接到的页面是演示，不等于已实现正式业务。旧的 `/local-life/` 演示及客户邀请页保留原路径，以免历史链接失效。
 
 | 项目 | 独立工程仓库 | 打开预览 |
 | --- | --- | --- |
-| **见趣 · 闺蜜机**（H01 `dev` 工程试点） | [ai-mirror](https://github.com/sanchuang-dev/ai-mirror) | [打开预览](https://sanchuang-dev.github.io/ai-mirror/dev/) |
+| **本地生活**（独立前端原型） | [local-life](https://github.com/sanchuang-dev/local-life) | [打开预览](https://sanchuang-dev.github.io/local-life/) |
+| **见趣 · 闺蜜机**（`dev` 演示） | [ai-mirror](https://github.com/sanchuang-dev/ai-mirror) | [打开预览](https://sanchuang-dev.github.io/ai-mirror/dev/) |
 | **AI 美发魔镜** | [ai-hair-mirror](https://github.com/sanchuang-dev/ai-hair-mirror) | [打开预览](https://sanchuang-dev.github.io/ai-hair-mirror/) |
 | **AI 试衣魔镜** | [ai-fitting-mirror](https://github.com/sanchuang-dev/ai-fitting-mirror) | [打开预览](https://sanchuang-dev.github.io/ai-fitting-mirror/) |
 | **AI 美妆镜** | [ai-beauty-mirror](https://github.com/sanchuang-dev/ai-beauty-mirror) | [打开预览](https://sanchuang-dev.github.io/ai-beauty-mirror/) |
 
-镜面入口的事实源是 [`demos.json`](demos.json) 中的 `builder: external-link` 记录；展厅卡片随构建自动生成。见趣 H01 竖屏适配仍按其独立仓库 PR 验收，展厅不会代替该流程。
+独立预览链接的事实源是 [`demos.json`](demos.json) 中的 `external_url`；其中本地生活保留历史构建器与旧版路径，展厅卡片则打开独立项目。所有卡片随构建自动生成。见趣 H01 竖屏适配仍按其独立仓库 PR 验收，展厅不会代替该流程。
 
 ### 客户方案邀请页
 

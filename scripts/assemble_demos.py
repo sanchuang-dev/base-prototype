@@ -73,6 +73,9 @@ def main():
         if not BRANCH_RE.fullmatch(branch) or ".." in branch or "//" in branch:
             raise ValueError(f"unsafe branch: {branch}")
         if demo.get("builder") == "legacy-community":
+            if demo.get("external_url"):
+                # The card uses the external source; retain and verify the historical release.
+                verified_external_urls(demo)
             if demo_id != "local-life" or branch != "demo/local-life":
                 raise ValueError("unsupported legacy builder mapping")
             published = SITE / target / "index.html"
