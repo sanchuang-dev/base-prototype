@@ -17,9 +17,19 @@ def verified_external_urls(demo):
     expected = demo["id"]
     destination = urlparse(demo["external_url"])
     repo = urlparse(demo["source_repository"])
-    expected_demo_path = "/ai-mirror/dev/" if expected == "jianqu" else f"/{expected}/"
+    destinations = {
+        # local-life is an intentionally retained public legacy preview.
+        "local-life": ("sanchuang-dev.github.io", "/local-life/"),
+        "jianqu": ("ai-mirror.proto.3cgroup.cn", "/"),
+        "ai-hair-mirror": ("hair-mirror.proto.3cgroup.cn", "/"),
+        "ai-fitting-mirror": ("fitting-mirror.proto.3cgroup.cn", "/"),
+        "ai-beauty-mirror": ("beauty-mirror.proto.3cgroup.cn", "/"),
+    }
+    if expected not in destinations:
+        raise ValueError(f"Unapproved external demo ID: {expected}")
+    expected_host, expected_demo_path = destinations[expected]
     expected_repo_path = f"/sanchuang-dev/{'ai-mirror' if expected == 'jianqu' else expected}"
-    if (destination.scheme != "https" or destination.netloc != "sanchuang-dev.github.io"
+    if (destination.scheme != "https" or destination.netloc != expected_host
             or destination.path != expected_demo_path or destination.params
             or destination.query or destination.fragment or destination.username
             or destination.password):
