@@ -18,8 +18,14 @@ def verified_external_urls(demo):
     destination = urlparse(demo["external_url"])
     repo = urlparse(demo["source_repository"])
     expected_demo_path = "/ai-mirror/dev/" if expected == "jianqu" else f"/{expected}/"
+    expected_host = "sanchuang-dev.github.io"
+    if expected == "ai-fitness-mirror":
+        # Explicitly allow the company-hosted fitness prototype; other external
+        # demo entries remain pinned to their GitHub Pages site and path.
+        expected_host = "fitness-mirror.proto.3cgroup.cn"
+        expected_demo_path = "/"
     expected_repo_path = f"/sanchuang-dev/{'ai-mirror' if expected == 'jianqu' else expected}"
-    if (destination.scheme != "https" or destination.netloc != "sanchuang-dev.github.io"
+    if (destination.scheme != "https" or destination.netloc != expected_host
             or destination.path != expected_demo_path or destination.params
             or destination.query or destination.fragment or destination.username
             or destination.password):
