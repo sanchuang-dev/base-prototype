@@ -103,6 +103,22 @@
         "交互预览"
       ],
       "theme": "mirror"
+    },
+    {
+      "id": "ai-fitness-mirror",
+      "publish_path": "ai-fitness-mirror",
+      "builder": "external-link",
+      "external_url": "https://fitness-mirror.proto.3cgroup.cn/",
+      "source_repository": "https://github.com/sanchuang-dev/ai-fitness-mirror",
+      "title": "AI 健身镜",
+      "category": "AI MIRROR · FITNESS",
+      "summary": "酒店与健身房双场景，体验触控大屏课程、训练计时与组间休息。当前是静态概念演示，不含摄像头与动作识别。",
+      "features": [
+        "酒店 / 健身房",
+        "训练计时",
+        "竖屏触控"
+      ],
+      "theme": "mirror"
     }
   ]
 }
